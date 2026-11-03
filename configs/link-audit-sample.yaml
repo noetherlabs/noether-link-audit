@@ -1,0 +1,72 @@
+# Sample link-loss audit on synthetic telemetry from a hypothetical station (OGS-A).
+# Every planted cause below is ground truth for validation; the audit never reads this file's
+# nights/passes sections, only the station section it would receive from an operator.
+experiment_id: link-audit-sample-v1
+seed: 20261101
+
+station: {}            # StationConfig defaults: 0.40 m aperture, 1550 nm, SMF, 2 kHz tip-tilt loop
+
+link:
+  reference_power_dbm: -32.0          # aperture power at 1000 km before atmosphere
+  outer_scale_m: 25.0                 # true von Karman outer scale used by the simulator
+  clear_extinction_db_per_airmass: 0.1
+  monitor_noise_db: 0.03
+  no_signal_dbm: -75.0
+
+audit:
+  assumed_outer_scale_m: 20.0         # declared site assumption used by the audit
+  what_if_rate_hz: 4000.0
+  what_if_bandwidth_hz: 200.0
+
+coupling_tables:
+  screens: 400
+  grid_size: 128
+  oversampling: 8
+  seed: 2026
+
+nights:
+  - id: N1
+    r0_500nm_zenith_m: 0.09
+    ground_wind_m_s: 4.0
+    passes:
+      - {id: P01, max_elevation_deg: 34, azimuth_offset_deg: 20}
+      - {id: P02, max_elevation_deg: 62, azimuth_offset_deg: -35}
+  - id: N2
+    r0_500nm_zenith_m: 0.08
+    ground_wind_m_s: 6.0
+    vibration: {frequency_hz: 47.0, amplitude_x_rad: 3.0e-6, amplitude_y_rad: 1.8e-6}
+    passes:
+      - {id: P03, max_elevation_deg: 48, azimuth_offset_deg: 0}
+      - {id: P04, max_elevation_deg: 75, azimuth_offset_deg: 40}
+  - id: N3
+    r0_500nm_zenith_m: 0.07
+    ground_wind_m_s: 5.0
+    ephemeris_time_offset_s: 0.6       # stale TLE, about 4.6 km along track
+    passes:
+      - {id: P05, max_elevation_deg: 41, azimuth_offset_deg: -10}
+      - id: P06
+        max_elevation_deg: 68
+        azimuth_offset_deg: 15
+        cirrus: {patches: [{centre_fraction: 0.5, width_s: 1.2, peak_db: 24.0}]}
+  - id: N4
+    r0_500nm_zenith_m: 0.06
+    ground_wind_m_s: 7.0
+    ephemeris_time_offset_s: 0.8       # stale TLE, about 6.1 km along track
+    defocus_waves_rms: 0.06
+    passes:
+      - {id: P07, max_elevation_deg: 29, azimuth_offset_deg: 30}
+      - id: P08
+        max_elevation_deg: 55
+        azimuth_offset_deg: -20
+        cirrus: {patches: [{centre_fraction: 0.55, width_s: 1.0, peak_db: 22.0}]}
+  - id: N5
+    r0_500nm_zenith_m: 0.10
+    ground_wind_m_s: 3.0
+    passes:
+      - {id: P09, max_elevation_deg: 87, azimuth_offset_deg: 10}
+      - id: P10
+        max_elevation_deg: 44
+        azimuth_offset_deg: -30
+        cirrus: {mean_db: 2.0, log_sigma: 0.9, correlation_s: 12.0}
+      - {id: P11, max_elevation_deg: 71, azimuth_offset_deg: 25}
+      - {id: P12, max_elevation_deg: 23, azimuth_offset_deg: 5}

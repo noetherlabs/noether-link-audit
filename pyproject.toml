@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "noether-link-audit"
+version = "0.1.0"
+description = "Telemetry-only link-loss audit for optical ground stations, with a simulation-only validated sample"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "numpy==2.1.3",
+  "scipy==1.14.1",
+  "PyYAML==6.0.2",
+  "matplotlib==3.9.3",
+  "pyarrow==23.0.1",
+  "hcipy==0.6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==9.0.3",
+  "ruff==0.8.4",
+]
+
+[project.scripts]
+noether-link-audit = "noether_link_audit.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+  "packages/noether_physics/src/noether_physics",
+  "projects/link-audit/src/noether_link_audit",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501"]

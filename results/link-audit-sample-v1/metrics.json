@@ -1,0 +1,1908 @@
+{
+ "schema": "link_audit_sample_v1",
+ "result_kind": "simulation",
+ "scope": "synthetic_telemetry_from_reduced_order_model_of_hypothetical_station",
+ "experiment_id": "link-audit-sample-v1",
+ "station": {
+  "aperture_diameter_m": 0.4,
+  "central_obscuration": 0.3,
+  "wavelength_m": 1.55e-06,
+  "optical_throughput": 0.7,
+  "tracking_split": 0.1,
+  "loop_rate_hz": 2000.0,
+  "loop_delay_frames": 2,
+  "rejection_bandwidth_hz": 100.0,
+  "tracking_noise_rad": 2.5e-07,
+  "tracking_noise_reference_dbm": -42.0,
+  "fsm_range_rad": 0.0004,
+  "acquisition_fov_rad": 0.001,
+  "nominal_acquisition_s": 3.0,
+  "search_s_per_fov_area": 0.5,
+  "lock_threshold_dbm": -54.0,
+  "lock_loss_hold_s": 0.2,
+  "mount_az_rate_limit_deg_s": 8.0,
+  "mount_az_accel_limit_deg_s2": 4.0,
+  "offload_time_constant_s": 1.0,
+  "data_rate_gbps": 10.0,
+  "sensitivity_dbm": -40.0,
+  "min_elevation_deg": 20.0,
+  "altitude_km": 550.0
+ },
+ "link": {
+  "reference_power_dbm": -32.0,
+  "outer_scale_m": 25.0,
+  "clear_extinction_db_per_airmass": 0.1,
+  "monitor_noise_db": 0.03,
+  "no_signal_dbm": -75.0
+ },
+ "audit_settings": {
+  "assumed_outer_scale_m": 20.0,
+  "window_s": 2.0,
+  "what_if_rate_hz": 4000.0,
+  "what_if_bandwidth_hz": 200.0,
+  "vibration_peak_ratio": 20.0,
+  "vibration_detect_fraction": 0.5,
+  "timing_detect_s": 0.05,
+  "timing_detect_sigma": 5.0,
+  "static_report_db": 0.3
+ },
+ "passes": [
+  {
+   "pass_id": "P01",
+   "night_id": "N1",
+   "max_elevation_deg": 34.0,
+   "planted": [],
+   "truth": {
+    "attribution": {
+     "possible_gb": 2536.0,
+     "delivered_gb": 2165.3,
+     "all_causes_removed_gb": 2536.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 7.909999999999967,
+      "tilt_residual": 88.88999999999987,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 254.5824999999999,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 19.317499999999995
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 78.29499999999962,
+     "all_practical_fixes": 78.29499999999962,
+     "low_order_ao_upper_bound": 299.5999999999999
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.0,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 5.728716924755003e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": false,
+     "planted": []
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 3.0,
+      "error": 3.406755281168439e-05,
+      "end": 30
+     }
+    ],
+    "median_d_over_r0": 1.7700081126170364,
+    "median_fried_parameter_m": 0.22598766678779597,
+    "mean_cirrus_db": 0.0,
+    "max_cirrus_db": 0.0
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 2536.0,
+     "delivered_gb": 2165.21,
+     "all_causes_removed_gb": 2536.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 6.731666666666644,
+      "tilt_residual": 84.50666666666659,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 260.12166666666667,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 19.430000000000064
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 71.41499999999996,
+     "all_practical_fixes": 71.41499999999996,
+     "low_order_ao_upper_bound": 299.875
+    },
+    "estimates": {
+     "static_db": 0.01035131493819108,
+     "median_d_over_r0": 1.7338329675743696,
+     "median_fried_parameter_m": 0.23070288611024936,
+     "mean_tilt_residual_rms_rad": 5.744634649157437e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 2165.21,
+     "max_extinction_db": 0.0,
+     "mean_extinction_db": 0.0
+    },
+    "timing": {
+     "offset_s": 0.004294269178376101,
+     "stderr_s": 4.728514699352325e-05,
+     "intercept_rad": -2.242445731180375e-05,
+     "cross_track_slope_s": 0.0013083891807428418,
+     "samples": 2506.0,
+     "max_bias_rad": 3.5818740401823234e-05,
+     "coupling_offset_db": 6.154205616006735,
+     "detected": 0.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 3.0,
+      "active_s": 3.0,
+      "predicted_error_rad": 3.642318887995742e-05,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P02",
+   "night_id": "N1",
+   "max_elevation_deg": 62.0,
+   "planted": [],
+   "truth": {
+    "attribution": {
+     "possible_gb": 3130.0,
+     "delivered_gb": 2897.4849999999997,
+     "all_causes_removed_gb": 3130.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 6.374999999999963,
+      "tilt_residual": 34.656666666666716,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 171.68416666666678,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 19.79916666666687
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 20.164999999999964,
+     "all_practical_fixes": 20.164999999999964,
+     "low_order_ao_upper_bound": 193.67000000000007
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.0,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 4.1788030717857867e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": false,
+     "planted": []
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 3.0,
+      "error": 1.8790659696438093e-05,
+      "end": 30
+     }
+    ],
+    "median_d_over_r0": 1.5259425586539508,
+    "median_fried_parameter_m": 0.2621330678070265,
+    "mean_cirrus_db": 0.0,
+    "max_cirrus_db": 0.0
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 3130.0,
+     "delivered_gb": 2897.48,
+     "all_causes_removed_gb": 3130.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 4.945833333333325,
+      "tilt_residual": 33.39833333333328,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 173.8658333333333,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 20.31000000000006
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 17.075000000000273,
+     "all_practical_fixes": 17.075000000000273,
+     "low_order_ao_upper_bound": 193.07499999999982
+    },
+    "estimates": {
+     "static_db": 0.009086492157610593,
+     "median_d_over_r0": 1.4878900462962337,
+     "median_fried_parameter_m": 0.2688394917951645,
+     "mean_tilt_residual_rms_rad": 4.2059588153326503e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 2897.48,
+     "max_extinction_db": 0.0,
+     "mean_extinction_db": 0.0
+    },
+    "timing": {
+     "offset_s": 0.0020291960517133042,
+     "stderr_s": 5.740889805047517e-05,
+     "intercept_rad": -2.859197367183738e-05,
+     "cross_track_slope_s": -0.0017388726910079848,
+     "samples": 3100.0,
+     "max_bias_rad": 2.4996554157748145e-05,
+     "coupling_offset_db": 6.152940793226154,
+     "detected": 0.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 3.0,
+      "active_s": 3.0,
+      "predicted_error_rad": 1.3967770422731418e-05,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P03",
+   "night_id": "N2",
+   "max_elevation_deg": 48.0,
+   "planted": [
+    "47 Hz structural vibration"
+   ],
+   "truth": {
+    "attribution": {
+     "possible_gb": 2963.0,
+     "delivered_gb": 2471.355,
+     "all_causes_removed_gb": 2963.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 3.402583333333307,
+      "tilt_residual": 60.62133333333332,
+      "vibration": 66.73175000000013,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 344.07675,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 16.81258333333331
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 125.99500000000035,
+     "refocus": 0.0,
+     "faster_tilt_loop": 129.70499999999993,
+     "all_practical_fixes": 240.17999999999984,
+     "low_order_ao_upper_bound": 373.4250000000002
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.0,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": {
+      "frequency_hz": 47.0,
+      "amplitude_x_rad": 3e-06,
+      "amplitude_y_rad": 1.8e-06
+     },
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 7.188901674383045e-07,
+     "mean_vibration_residual_rms_rad": 5.426654409433039e-07,
+     "keyhole": false,
+     "planted": [
+      "47 Hz structural vibration"
+     ]
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 3.0,
+      "error": 2.456253181179155e-05,
+      "end": 30
+     }
+    ],
+    "median_d_over_r0": 1.8039372217138807,
+    "median_fried_parameter_m": 0.22173720636462554,
+    "mean_cirrus_db": 0.0,
+    "max_cirrus_db": 0.0
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 2963.0,
+     "delivered_gb": 2471.3050000000003,
+     "all_causes_removed_gb": 2963.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.12966666666660173,
+      "scintillation": 2.624666666666546,
+      "tilt_residual": 59.512166666666594,
+      "vibration": 65.90883333333335,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 346.7621666666666,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 16.757499999999986
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 124.21000000000004,
+     "refocus": 0.0,
+     "faster_tilt_loop": 124.14499999999998,
+     "all_practical_fixes": 231.8800000000001,
+     "low_order_ao_upper_bound": 366.645
+    },
+    "estimates": {
+     "static_db": 0.00010179090869222307,
+     "median_d_over_r0": 1.8069922927516133,
+     "median_fried_parameter_m": 0.2213666067073109,
+     "mean_tilt_residual_rms_rad": 7.20625248620641e-07,
+     "mean_vibration_residual_rms_rad": 5.406893782343092e-07,
+     "observed_delivered_gb": 2471.3050000000003,
+     "max_extinction_db": 0.24928775929981128,
+     "mean_extinction_db": 0.00024391324172404527
+    },
+    "timing": {
+     "offset_s": 0.0036719116888851784,
+     "stderr_s": 4.144590624041032e-05,
+     "intercept_rad": -2.9751900178316006e-05,
+     "cross_track_slope_s": -0.00021884673289856296,
+     "samples": 2933.0,
+     "max_bias_rad": 3.882944727287402e-05,
+     "coupling_offset_db": 6.143956091977236,
+     "detected": 0.0
+    },
+    "vibration": {
+     "frequency_hz": 47.0,
+     "bin_frequency_hz": 46.0,
+     "detected_fraction": 0.9794520547945206
+    },
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 3.0,
+      "active_s": 3.0,
+      "predicted_error_rad": 2.319008599669434e-05,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P04",
+   "night_id": "N2",
+   "max_elevation_deg": 75.0,
+   "planted": [
+    "47 Hz structural vibration"
+   ],
+   "truth": {
+    "attribution": {
+     "possible_gb": 3197.0,
+     "delivered_gb": 2779.1800000000003,
+     "all_causes_removed_gb": 3197.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 2.9120833333332263,
+      "tilt_residual": 39.444166666666504,
+      "vibration": 57.56916666666679,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 300.8116666666666,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 17.082916666666534
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 109.97499999999991,
+     "refocus": 0.0,
+     "faster_tilt_loop": 99.19999999999982,
+     "all_practical_fixes": 197.39999999999964,
+     "low_order_ao_upper_bound": 327.3349999999996
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.0,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": {
+      "frequency_hz": 47.0,
+      "amplitude_x_rad": 3e-06,
+      "amplitude_y_rad": 1.8e-06
+     },
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 6.737528722007232e-07,
+     "mean_vibration_residual_rms_rad": 5.426684328652307e-07,
+     "keyhole": false,
+     "planted": [
+      "47 Hz structural vibration"
+     ]
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 3.0,
+      "error": 2.139681433645624e-05,
+      "end": 30
+     }
+    ],
+    "median_d_over_r0": 1.6782371148327866,
+    "median_fried_parameter_m": 0.23834534254109532,
+    "mean_cirrus_db": 0.0,
+    "max_cirrus_db": 0.0
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 3197.0,
+     "delivered_gb": 2779.01,
+     "all_causes_removed_gb": 3197.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.07708333333332576,
+      "scintillation": 2.8691666666666906,
+      "tilt_residual": 38.50166666666653,
+      "vibration": 57.28291666666668,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 302.2216666666666,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 17.037499999999987
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 108.65999999999985,
+     "refocus": 0.0,
+     "faster_tilt_loop": 94.94999999999982,
+     "all_practical_fixes": 190.66499999999996,
+     "low_order_ao_upper_bound": 325.625
+    },
+    "estimates": {
+     "static_db": 0.0032464542978605238,
+     "median_d_over_r0": 1.6545140793453437,
+     "median_fried_parameter_m": 0.24176282631470358,
+     "mean_tilt_residual_rms_rad": 6.749382838878254e-07,
+     "mean_vibration_residual_rms_rad": 5.424356120338015e-07,
+     "observed_delivered_gb": 2779.01,
+     "max_extinction_db": 0.22171676973894705,
+     "mean_extinction_db": 0.00013870301516355775
+    },
+    "timing": {
+     "offset_s": 0.0020586325309083883,
+     "stderr_s": 5.883304400069737e-05,
+     "intercept_rad": -2.129494584399057e-05,
+     "cross_track_slope_s": 0.0015591846503417435,
+     "samples": 3167.0,
+     "max_bias_rad": 2.7515294978494637e-05,
+     "coupling_offset_db": 6.147100755366404,
+     "detected": 0.0
+    },
+    "vibration": {
+     "frequency_hz": 46.99651733262107,
+     "bin_frequency_hz": 46.0,
+     "detected_fraction": 1.0
+    },
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 3.0,
+      "active_s": 3.0,
+      "predicted_error_rad": 7.097044724011189e-06,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P05",
+   "night_id": "N3",
+   "max_elevation_deg": 41.0,
+   "planted": [
+    "along-track ephemeris bias equivalent to 0.60 s"
+   ],
+   "truth": {
+    "attribution": {
+     "possible_gb": 2804.0000000000005,
+     "delivered_gb": 2240.065,
+     "all_causes_removed_gb": 2804.0000000000005,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 1.7320833333332835,
+      "tilt_residual": 67.13041666666673,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 466.79625000000016,
+      "ephemeris": 12.187083333333478,
+      "keyhole": 0.0,
+      "nominal_acquisition": 16.089166666666756
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 1.9850000000001273,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 58.0949999999998,
+     "all_practical_fixes": 61.125,
+     "low_order_ao_upper_bound": 473.66499999999996
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.6,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 5.120789696369731e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": false,
+     "planted": [
+      "along-track ephemeris bias equivalent to 0.60 s"
+     ]
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 5.142726589348727,
+      "error": 0.0022990113481010602,
+      "end": 52
+     }
+    ],
+    "median_d_over_r0": 2.147765211043848,
+    "median_fried_parameter_m": 0.18624009648237083,
+    "mean_cirrus_db": 0.0,
+    "max_cirrus_db": 0.0
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 2804.0000000000005,
+     "delivered_gb": 2240.2799999999997,
+     "all_causes_removed_gb": 2804.0000000000005,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 1.1979166666666745,
+      "tilt_residual": 66.45041666666685,
+      "vibration": 0.0,
+      "static_optics": 7.7637500000000115,
+      "higher_order_turbulence": 459.5687500000002,
+      "ephemeris": 12.339583333333575,
+      "keyhole": 0.0,
+      "nominal_acquisition": 16.399583333333375
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 1.930000000000291,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 15.675000000000182,
+     "faster_tilt_loop": 52.225000000000364,
+     "all_practical_fixes": 70.51000000000022,
+     "low_order_ao_upper_bound": 474.3050000000003
+    },
+    "estimates": {
+     "static_db": -0.04983126141570082,
+     "median_d_over_r0": 2.1020132268497784,
+     "median_fried_parameter_m": 0.19029375975881346,
+     "mean_tilt_residual_rms_rad": 5.150239193112545e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 2240.2799999999997,
+     "max_extinction_db": 0.0,
+     "mean_extinction_db": 0.0
+    },
+    "timing": {
+     "offset_s": 0.6031665694293477,
+     "stderr_s": 0.0001724682385320958,
+     "intercept_rad": -2.496243644054526e-05,
+     "cross_track_slope_s": -0.008335713601500013,
+     "samples": 2752.0,
+     "max_bias_rad": 0.005734023501519141,
+     "coupling_offset_db": 6.094023039652843,
+     "detected": 1.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 5.2,
+      "active_s": 5.2,
+      "predicted_error_rad": 0.002314628122166122,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P06",
+   "night_id": "N3",
+   "max_elevation_deg": 68.0,
+   "planted": [
+    "along-track ephemeris bias equivalent to 0.60 s",
+    "short cloud patch near culmination"
+   ],
+   "truth": {
+    "attribution": {
+     "possible_gb": 3168.0,
+     "delivered_gb": 2375.11,
+     "all_causes_removed_gb": 3168.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 200.97458333333324,
+      "scintillation": 2.6216666666666764,
+      "tilt_residual": 37.95583333333327,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 385.66000000000014,
+      "ephemeris": 149.25791666666677,
+      "keyhole": 0.0,
+      "nominal_acquisition": 16.420000000000048
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 286.27,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 22.954999999999927,
+     "all_practical_fixes": 309.4749999999999,
+     "low_order_ao_upper_bound": 391.75999999999976
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.6,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 4.1140584929043826e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": false,
+     "planted": [
+      "along-track ephemeris bias equivalent to 0.60 s",
+      "short cloud patch near culmination"
+     ]
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 4.174572348214251,
+      "error": 0.0018300668557264517,
+      "end": 42
+     },
+     {
+      "start": 1575,
+      "trigger": "cloud",
+      "required": 31.485699162257706,
+      "error": 0.007613895082315977,
+      "end": 1910
+     }
+    ],
+    "median_d_over_r0": 1.9372674562165448,
+    "median_fried_parameter_m": 0.20647639604214388,
+    "mean_cirrus_db": 0.22787529769374024,
+    "max_cirrus_db": 23.97917570629623
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 3168.0,
+     "delivered_gb": 2374.92,
+     "all_causes_removed_gb": 3167.475,
+     "link_budget_residual_gb": 0.525000000000091,
+     "shapley_gb": {
+      "cloud": 190.7127499999999,
+      "scintillation": 1.8010833333333203,
+      "tilt_residual": 37.48566666666675,
+      "vibration": 0.0,
+      "static_optics": 2.59941666666664,
+      "higher_order_turbulence": 384.06483333333335,
+      "ephemeris": 159.31541666666658,
+      "keyhole": 0.0,
+      "nominal_acquisition": 16.57583333333332
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 306.30499999999984,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 5.139999999999873,
+     "faster_tilt_loop": 19.190000000000055,
+     "all_practical_fixes": 330.91499999999996,
+     "low_order_ao_upper_bound": 392.03999999999996
+    },
+    "estimates": {
+     "static_db": -0.019953834845691354,
+     "median_d_over_r0": 1.9201393006238543,
+     "median_fried_parameter_m": 0.20831821934483596,
+     "mean_tilt_residual_rms_rad": 4.1276267053493566e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 2374.92,
+     "max_extinction_db": 12.125613286787988,
+     "mean_extinction_db": 0.048682601706052576
+    },
+    "timing": {
+     "offset_s": 0.5996471117956904,
+     "stderr_s": 0.00025501216751020833,
+     "intercept_rad": -1.20234084672508e-05,
+     "cross_track_slope_s": -0.012515262009323758,
+     "samples": 2791.0,
+     "max_bias_rad": 0.007720976147580978,
+     "coupling_offset_db": 6.123900466222852,
+     "detected": 1.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 4.2,
+      "active_s": 4.2,
+      "predicted_error_rad": 0.0018467794600479266,
+      "truncated": false
+     },
+     {
+      "trigger": "cloud",
+      "start_s": 157.5,
+      "stop_s": 191.0,
+      "active_s": 33.5,
+      "predicted_error_rad": 0.007591554113992911,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P07",
+   "night_id": "N4",
+   "max_elevation_deg": 29.0,
+   "planted": [
+    "along-track ephemeris bias equivalent to 0.80 s",
+    "static defocus 0.060 waves RMS"
+   ],
+   "truth": {
+    "attribution": {
+     "possible_gb": 2209.0,
+     "delivered_gb": 630.745,
+     "all_causes_removed_gb": 2209.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 1.6471666666666662,
+      "tilt_residual": 156.5613333333334,
+      "vibration": 0.0,
+      "static_optics": 145.33424999999997,
+      "higher_order_turbulence": 1227.18925,
+      "ephemeris": 32.88274999999998,
+      "keyhole": 0.0,
+      "nominal_acquisition": 14.640249999999984
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 1.044999999999959,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 263.235,
+     "faster_tilt_loop": 155.93000000000006,
+     "all_practical_fixes": 439.13,
+     "low_order_ao_upper_bound": 1330.38
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.8,
+     "defocus_waves_rms": 0.06,
+     "static_loss_db": 0.5968588838358139,
+     "static_loss_in_pass_db": 0.718174397945404,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 6.390797935855302e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": false,
+     "planted": [
+      "along-track ephemeris bias equivalent to 0.80 s",
+      "static defocus 0.060 waves RMS"
+     ]
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 9.536404040054173,
+      "error": 0.003751374158906086,
+      "end": 96
+     }
+    ],
+    "median_d_over_r0": 2.8085677579683095,
+    "median_fried_parameter_m": 0.1424213458497281,
+    "mean_cirrus_db": 0.0,
+    "max_cirrus_db": 0.0
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 2209.0,
+     "delivered_gb": 630.595,
+     "all_causes_removed_gb": 2209.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 1.094583333333325,
+      "tilt_residual": 154.17499999999998,
+      "vibration": 0.0,
+      "static_optics": 160.47333333333336,
+      "higher_order_turbulence": 1213.8716666666667,
+      "ephemeris": 33.87916666666664,
+      "keyhole": 0.0,
+      "nominal_acquisition": 14.911250000000011
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 1.0849999999999227,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 300.4749999999999,
+     "faster_tilt_loop": 146.04499999999996,
+     "all_practical_fixes": 451.52,
+     "low_order_ao_upper_bound": 1315.015
+    },
+    "estimates": {
+     "static_db": -0.6526113282469526,
+     "median_d_over_r0": 2.819122701501254,
+     "median_fried_parameter_m": 0.141888112846947,
+     "mean_tilt_residual_rms_rad": 6.418460110959514e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 630.595,
+     "max_extinction_db": 0.0,
+     "mean_extinction_db": 0.0
+    },
+    "timing": {
+     "offset_s": 0.8011577916484744,
+     "stderr_s": 0.0005608715178385314,
+     "intercept_rad": 3.2083052033934817e-06,
+     "cross_track_slope_s": -0.004224269765700605,
+     "samples": 2113.0,
+     "max_bias_rad": 0.005982757429814548,
+     "coupling_offset_db": 5.491242972821591,
+     "detected": 1.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 9.6,
+      "active_s": 9.6,
+      "predicted_error_rad": 0.0037572764224548904,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P08",
+   "night_id": "N4",
+   "max_elevation_deg": 55.0,
+   "planted": [
+    "along-track ephemeris bias equivalent to 0.80 s",
+    "static defocus 0.060 waves RMS",
+    "short cloud patch near culmination"
+   ],
+   "truth": {
+    "attribution": {
+     "possible_gb": 3064.0000000000005,
+     "delivered_gb": 1759.98,
+     "all_causes_removed_gb": 3064.0000000000005,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 246.76350000000002,
+      "scintillation": 0.8424166666666631,
+      "tilt_residual": 45.94100000000012,
+      "vibration": 0.0,
+      "static_optics": 98.10258333333327,
+      "higher_order_turbulence": 688.8178333333336,
+      "ephemeris": 208.35550000000018,
+      "keyhole": 0.0,
+      "nominal_acquisition": 15.197166666666712
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 384.4200000000001,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 192.56999999999994,
+     "faster_tilt_loop": 36.47499999999991,
+     "all_practical_fixes": 614.6599999999999,
+     "low_order_ao_upper_bound": 761.605
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.8,
+     "defocus_waves_rms": 0.06,
+     "static_loss_db": 0.5968588838358139,
+     "static_loss_in_pass_db": 0.7068713307380676,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 4.498195683632086e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": false,
+     "planted": [
+      "along-track ephemeris bias equivalent to 0.80 s",
+      "static defocus 0.060 waves RMS",
+      "short cloud patch near culmination"
+     ]
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 6.019755678399376,
+      "error": 0.0026532077485185274,
+      "end": 61
+     },
+     {
+      "start": 1678,
+      "trigger": "cloud",
+      "required": 41.52526419571011,
+      "error": 0.008834621010061508,
+      "end": 2110
+     }
+    ],
+    "median_d_over_r0": 2.336614332382668,
+    "median_fried_parameter_m": 0.17118785784602658,
+    "mean_cirrus_db": 0.1799798369513223,
+    "max_cirrus_db": 21.98652912587634
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 3064.0000000000005,
+     "delivered_gb": 1760.025,
+     "all_causes_removed_gb": 3063.425,
+     "link_budget_residual_gb": 0.5750000000002728,
+     "shapley_gb": {
+      "cloud": 235.60533333333333,
+      "scintillation": 1.09941666666668,
+      "tilt_residual": 46.56116666666666,
+      "vibration": 0.0,
+      "static_optics": 106.89408333333344,
+      "higher_order_turbulence": 683.019916666667,
+      "ephemeris": 214.50216666666674,
+      "keyhole": 0.0,
+      "nominal_acquisition": 15.717916666666621
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 391.30999999999995,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 206.48500000000013,
+     "faster_tilt_loop": 33.24499999999989,
+     "all_practical_fixes": 637.7399999999998,
+     "low_order_ao_upper_bound": 762.6799999999998
+    },
+    "estimates": {
+     "static_db": -0.760157752403062,
+     "median_d_over_r0": 2.3183288039962333,
+     "median_fried_parameter_m": 0.17253808409614027,
+     "mean_tilt_residual_rms_rad": 4.512127032954011e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 1760.025,
+     "max_extinction_db": 10.442963124953614,
+     "mean_extinction_db": 0.038747909218359536
+    },
+    "timing": {
+     "offset_s": 0.7992358759030214,
+     "stderr_s": 0.00022909120402812293,
+     "intercept_rad": -1.2704504594192853e-05,
+     "cross_track_slope_s": -0.016129789124161856,
+     "samples": 2571.0,
+     "max_bias_rad": 0.009206407472256286,
+     "coupling_offset_db": 5.3836965486654815,
+     "detected": 1.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 6.1,
+      "active_s": 6.1,
+      "predicted_error_rad": 0.0026604678786322357,
+      "truncated": false
+     },
+     {
+      "trigger": "cloud",
+      "start_s": 167.8,
+      "stop_s": 211.0,
+      "active_s": 43.2,
+      "predicted_error_rad": 0.008875844879046949,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P09",
+   "night_id": "N5",
+   "max_elevation_deg": 87.0,
+   "planted": [],
+   "truth": {
+    "attribution": {
+     "possible_gb": 3220.0,
+     "delivered_gb": 2875.1150000000002,
+     "all_causes_removed_gb": 3220.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 8.793333333333345,
+      "tilt_residual": 24.457499999999868,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 103.09416666666674,
+      "ephemeris": 0.0,
+      "keyhole": 185.99999999999972,
+      "nominal_acquisition": 22.540000000000056
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 185.99999999999955,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 11.700000000000273,
+     "all_practical_fixes": 197.69999999999982,
+     "low_order_ao_upper_bound": 123.94999999999982
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.0,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 3.8644976812221047e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": true,
+     "planted": []
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 3.0,
+      "error": 1.9622489043653365e-05,
+      "end": 30
+     },
+     {
+      "start": 1581,
+      "trigger": "keyhole",
+      "required": 3.0,
+      "error": 0.0005955007096542719,
+      "end": 1767
+     }
+    ],
+    "median_d_over_r0": 1.3320401733830245,
+    "median_fried_parameter_m": 0.30029125302361526,
+    "mean_cirrus_db": 0.0,
+    "max_cirrus_db": 0.0
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 3220.0,
+     "delivered_gb": 2874.925,
+     "all_causes_removed_gb": 3220.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 7.256250000000006,
+      "tilt_residual": 23.100416666666693,
+      "vibration": 0.0,
+      "static_optics": 0.1112499999999803,
+      "higher_order_turbulence": 105.77291666666667,
+      "ephemeris": 0.0,
+      "keyhole": 185.99999999999977,
+      "nominal_acquisition": 22.83416666666669
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 186.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.2300000000000182,
+     "faster_tilt_loop": 8.519999999999527,
+     "all_practical_fixes": 194.76999999999953,
+     "low_order_ao_upper_bound": 123.19000000000005
+    },
+    "estimates": {
+     "static_db": -0.0013282125938616218,
+     "median_d_over_r0": 1.33988418659748,
+     "median_fried_parameter_m": 0.29853326429336063,
+     "mean_tilt_residual_rms_rad": 3.8918852383470263e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 2874.925,
+     "max_extinction_db": 0.0,
+     "mean_extinction_db": 0.0
+    },
+    "timing": {
+     "offset_s": 6.75289069634961e-05,
+     "stderr_s": 3.713530506897369e-05,
+     "intercept_rad": -1.678958440611236e-05,
+     "cross_track_slope_s": 0.00041186063380658155,
+     "samples": 3004.0,
+     "max_bias_rad": 9.303854060326122e-07,
+     "coupling_offset_db": 6.142526088474682,
+     "detected": 0.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 3.0,
+      "active_s": 3.0,
+      "predicted_error_rad": 1.3919036115223716e-06,
+      "truncated": false
+     },
+     {
+      "trigger": "keyhole",
+      "start_s": 158.1,
+      "stop_s": 176.7,
+      "active_s": 3.0,
+      "predicted_error_rad": 0.0005708915672003821,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P10",
+   "night_id": "N5",
+   "max_elevation_deg": 44.0,
+   "planted": [
+    "patchy cirrus deck"
+   ],
+   "truth": {
+    "attribution": {
+     "possible_gb": 2882.0,
+     "delivered_gb": 2097.52,
+     "all_causes_removed_gb": 2882.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 401.971,
+      "scintillation": 6.812249999999924,
+      "tilt_residual": 85.19391666666661,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 274.2685000000001,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 16.234333333333336
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 46.840000000000146,
+     "all_practical_fixes": 46.840000000000146,
+     "low_order_ao_upper_bound": 305.9549999999999
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.0,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 5.077824508398967e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": false,
+     "planted": [
+      "patchy cirrus deck"
+     ]
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 3.0,
+      "error": 2.161009558713749e-05,
+      "end": 30
+     },
+     {
+      "start": 2767,
+      "trigger": "cloud",
+      "required": 3.0,
+      "error": 5.905275214826472e-05,
+      "end": 2816
+     }
+    ],
+    "median_d_over_r0": 1.4748599870950043,
+    "median_fried_parameter_m": 0.27121218753916365,
+    "mean_cirrus_db": 1.5256248970265223,
+    "max_cirrus_db": 11.494456752208846
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 2882.0,
+     "delivered_gb": 2097.6949999999997,
+     "all_causes_removed_gb": 2882.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 395.13041666666675,
+      "scintillation": 7.909583333333247,
+      "tilt_residual": 83.91374999999998,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 280.85791666666677,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 16.493333333333446
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 39.03500000000031,
+     "all_practical_fixes": 39.03500000000031,
+     "low_order_ao_upper_bound": 301.00000000000045
+    },
+    "estimates": {
+     "static_db": 0.030936263344337078,
+     "median_d_over_r0": 1.4610916683167996,
+     "median_fried_parameter_m": 0.27376790154501823,
+     "mean_tilt_residual_rms_rad": 5.114803718458253e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 2097.6949999999997,
+     "max_extinction_db": 9.744614476352908,
+     "mean_extinction_db": 1.5138928776937857
+    },
+    "timing": {
+     "offset_s": 0.0026099346750768576,
+     "stderr_s": 0.00010919706084529873,
+     "intercept_rad": -2.6979087905361318e-05,
+     "cross_track_slope_s": -0.0020418866684260633,
+     "samples": 2803.0,
+     "max_bias_rad": 2.604177927618246e-05,
+     "coupling_offset_db": 6.174790564412881,
+     "detected": 0.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 3.0,
+      "active_s": 3.0,
+      "predicted_error_rad": 2.64208523263003e-05,
+      "truncated": false
+     },
+     {
+      "trigger": "cloud",
+      "start_s": 276.7,
+      "stop_s": 281.6,
+      "active_s": 3.0,
+      "predicted_error_rad": 2.963593197261491e-05,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P11",
+   "night_id": "N5",
+   "max_elevation_deg": 71.0,
+   "planted": [],
+   "truth": {
+    "attribution": {
+     "possible_gb": 3182.0,
+     "delivered_gb": 3020.26,
+     "all_causes_removed_gb": 3182.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 7.269166666666555,
+      "tilt_residual": 26.130833333333246,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 105.87999999999995,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 22.460000000000033
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 12.794999999999618,
+     "all_practical_fixes": 12.794999999999618,
+     "low_order_ao_upper_bound": 125.625
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.0,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 4.0048635421277453e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": false,
+     "planted": []
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 3.0,
+      "error": 2.1105330133224565e-05,
+      "end": 30
+     }
+    ],
+    "median_d_over_r0": 1.349440333095934,
+    "median_fried_parameter_m": 0.29641919646114123,
+    "mean_cirrus_db": 0.0,
+    "max_cirrus_db": 0.0
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 3182.0,
+     "delivered_gb": 3019.855,
+     "all_causes_removed_gb": 3182.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.369750000000037,
+      "scintillation": 6.958333333333249,
+      "tilt_residual": 25.062249999999995,
+      "vibration": 0.0,
+      "static_optics": 0.0030833333332869486,
+      "higher_order_turbulence": 106.90891666666667,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 22.842666666666748
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.004999999999654392,
+     "faster_tilt_loop": 10.760000000000218,
+     "all_practical_fixes": 10.760000000000218,
+     "low_order_ao_upper_bound": 126.09500000000025
+    },
+    "estimates": {
+     "static_db": -0.00010179090869222307,
+     "median_d_over_r0": 1.2917119489825033,
+     "median_fried_parameter_m": 0.309666563288421,
+     "mean_tilt_residual_rms_rad": 4.0320710178124055e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 3019.855,
+     "max_extinction_db": 0.4229759092030534,
+     "mean_extinction_db": 0.0006294039592956403
+    },
+    "timing": {
+     "offset_s": 0.002597789572134894,
+     "stderr_s": 4.612279316323553e-05,
+     "intercept_rad": -2.7086857070218983e-05,
+     "cross_track_slope_s": 0.0011610185076750283,
+     "samples": 3152.0,
+     "max_bias_rad": 3.4050654559803326e-05,
+     "coupling_offset_db": 6.143752510159851,
+     "detected": 0.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 3.0,
+      "active_s": 3.0,
+      "predicted_error_rad": 9.103271302172752e-06,
+      "truncated": false
+     }
+    ]
+   }
+  },
+  {
+   "pass_id": "P12",
+   "night_id": "N5",
+   "max_elevation_deg": 23.0,
+   "planted": [],
+   "truth": {
+    "attribution": {
+     "possible_gb": 1429.0,
+     "delivered_gb": 715.86,
+     "all_causes_removed_gb": 1429.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 16.768750000000004,
+      "tilt_residual": 264.09625000000005,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 412.2595833333333,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 20.015416666666674
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 235.17499999999995,
+     "all_practical_fixes": 235.17499999999995,
+     "low_order_ao_upper_bound": 490.43500000000006
+    },
+    "parameters": {
+     "ephemeris_time_offset_s": 0.0,
+     "defocus_waves_rms": 0.0,
+     "static_loss_db": -0.0,
+     "static_loss_in_pass_db": 0.0,
+     "vibration": null,
+     "loop_gain": 0.48564131643969577,
+     "tilt_variance_ratio_outer_scale": 0.6420242334245146,
+     "mean_true_residual_rms_rad": 7.424806931726886e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "keyhole": false,
+     "planted": []
+    },
+    "episodes": [
+     {
+      "start": 0,
+      "trigger": "pass_start",
+      "required": 3.0,
+      "error": 4.2757361194521745e-05,
+      "end": 30
+     }
+    ],
+    "median_d_over_r0": 1.8463302489996276,
+    "median_fried_parameter_m": 0.2166459658106813,
+    "mean_cirrus_db": 0.0,
+    "max_cirrus_db": 0.0
+   },
+   "audit": {
+    "attribution": {
+     "possible_gb": 1429.0,
+     "delivered_gb": 715.925,
+     "all_causes_removed_gb": 1429.0,
+     "link_budget_residual_gb": 0.0,
+     "shapley_gb": {
+      "cloud": 0.0,
+      "scintillation": 15.990000000000018,
+      "tilt_residual": 246.33666666666656,
+      "vibration": 0.0,
+      "static_optics": 0.0,
+      "higher_order_turbulence": 430.9291666666667,
+      "ephemeris": 0.0,
+      "keyhole": 0.0,
+      "nominal_acquisition": 19.819166666666746
+     }
+    },
+    "fix_gains_gb": {
+     "fresh_ephemeris": 0.0,
+     "keyhole_tracking": 0.0,
+     "vibration_fix": 0.0,
+     "refocus": 0.0,
+     "faster_tilt_loop": 219.18000000000006,
+     "all_practical_fixes": 219.18000000000006,
+     "low_order_ao_upper_bound": 493.58500000000004
+    },
+    "estimates": {
+     "static_db": 0.03829668230084948,
+     "median_d_over_r0": 1.8475847637840372,
+     "median_fried_parameter_m": 0.21649886264528415,
+     "mean_tilt_residual_rms_rad": 7.453511565006957e-07,
+     "mean_vibration_residual_rms_rad": 0.0,
+     "observed_delivered_gb": 715.925,
+     "max_extinction_db": 0.0,
+     "mean_extinction_db": 0.0
+    },
+    "timing": {
+     "offset_s": 0.004920688780826381,
+     "stderr_s": 0.00035040429849326614,
+     "intercept_rad": -2.206686310742563e-05,
+     "cross_track_slope_s": 0.0014386387615041491,
+     "samples": 1399.0,
+     "max_bias_rad": 3.1489222674373714e-05,
+     "coupling_offset_db": 6.182150983369393,
+     "detected": 0.0
+    },
+    "vibration": null,
+    "episodes": [
+     {
+      "trigger": "pass_start",
+      "start_s": 0.0,
+      "stop_s": 3.0,
+      "active_s": 3.0,
+      "predicted_error_rad": 5.270150062386349e-05,
+      "truncated": false
+     }
+    ]
+   }
+  }
+ ],
+ "calibration": {
+  "clear_sky_c0_db": -41.99813591400781,
+  "clear_sky_extinction_db_per_airmass": 0.10273104520572923,
+  "clear_sky_points": 29528,
+  "coupling_reference_db": 6.143854301068544,
+  "acquisition_nominal_s": 2.9837361716448587,
+  "acquisition_search_s_per_area": 0.5241458542993468,
+  "acquisition_episodes": 16
+ },
+ "coupling_model": {
+  "eta0": 0.6561729666954468,
+  "theta_c_rad": 2.4791704379055796e-06,
+  "tilt_fit_max_relative_error": 0.00790247210534608,
+  "static_relative": {
+   "tip_tilt": 1.0,
+   "low_order_ao_11": 1.0,
+   "tip_tilt+defocus_0.060": 0.8715937585448916
+  },
+  "d_over_r0_grid": [
+   0.4,
+   0.6,
+   0.8,
+   1.0,
+   1.25,
+   1.5,
+   1.75,
+   2.0,
+   2.4,
+   2.8,
+   3.3,
+   4.0,
+   5.0,
+   6.0
+  ],
+  "mean_log_db_tip_tilt": [
+   -0.11488536027021368,
+   -0.2259371784648021,
+   -0.36518638641246143,
+   -0.5301247792839574,
+   -0.7698250539863338,
+   -1.044528072286954,
+   -1.3524168406298671,
+   -1.6920769563017621,
+   -2.2988120734679467,
+   -2.9800751380337225,
+   -3.9310889137202114,
+   -5.43446387365217,
+   -7.884233995486094,
+   -10.623192734674598
+  ],
+  "diagnostics": {
+   "screens": 400,
+   "grid_size": 128,
+   "oversampling": 8,
+   "outer_scale_m": 25.0,
+   "seed": 2026,
+   "tilt_removed_phase_variance_rad2_at_d_over_r0_1": 0.1296824229815168,
+   "noll_tip_tilt_removed_kolmogorov_clear_pupil_rad2": 0.134,
+   "mean_relative_coupling": {
+    "tip_tilt": [
+     0.973951,
+     0.949523,
+     0.919899,
+     0.886199,
+     0.83977,
+     0.79003,
+     0.738343,
+     0.685874,
+     0.602688,
+     0.523088,
+     0.431791,
+     0.322993,
+     0.207379,
+     0.131736
+    ],
+    "tip_tilt+defocus_0.060": [
+     0.84487,
+     0.82267,
+     0.796393,
+     0.766942,
+     0.726811,
+     0.684174,
+     0.640116,
+     0.595557,
+     0.525097,
+     0.457735,
+     0.380354,
+     0.287672,
+     0.188083,
+     0.12182
+    ],
+    "low_order_ao_11": [
+     0.991939,
+     0.984219,
+     0.97464,
+     0.963434,
+     0.947419,
+     0.929449,
+     0.909779,
+     0.888639,
+     0.852275,
+     0.813454,
+     0.762521,
+     0.688818,
+     0.583498,
+     0.483431
+    ]
+   },
+   "convergence": {
+    "grid128_over4": {
+     "d_over_r0": 3.0,
+     "mean_relative_coupling": 0.4894696336802421,
+     "standard_error": 0.0120854920235779
+    },
+    "grid128_over16": {
+     "d_over_r0": 3.0,
+     "mean_relative_coupling": 0.4822122630051797,
+     "standard_error": 0.012119422804391733
+    },
+    "grid256_over8": {
+     "d_over_r0": 3.0,
+     "mean_relative_coupling": 0.49393721458028056,
+     "standard_error": 0.01157144002204511
+    },
+    "reference_grid128_over8_at_3p3": 0.43179050696113835,
+    "reference_grid128_over8_interpolated_at_3p0": 0.4847511530147047
+   }
+  }
+ },
+ "software": {
+  "python": "3.12.0",
+  "numpy": "2.1.3",
+  "scipy": "1.14.1"
+ },
+ "source_sha256": {
+  "projects/link-audit/src/noether_link_audit/station.py": "1d720b3bb98bbe07815206884057058a230d24df9602770e6a0a1b53f89d08c9",
+  "projects/link-audit/src/noether_link_audit/coupling_tables.py": "25fc903420cdcea15e074eb2f3577177d08849971a00b771466c9e55e36df253",
+  "projects/link-audit/src/noether_link_audit/simulate.py": "69560487dcc6575f76fa92e31f3fc26b20e8336e93dc9dfaa604ad7cf5989c32",
+  "projects/link-audit/src/noether_link_audit/audit.py": "0ff2de76b3c2d5ee26ab9eee26a74fd340b5c6cc964a99067f0a9fa72313d042",
+  "projects/link-audit/src/noether_link_audit/attribution.py": "4cb7b40f9b57541418e9ea4a5d4a9ff3a40d777bd7ad2207659de413758a53bd",
+  "projects/link-audit/src/noether_link_audit/pipeline.py": "e1cbb5f48a4fb44327a0a61d99433137cc9b3f6e6fcdc11cbe07262adf47be38",
+  "projects/link-audit/src/noether_link_audit/report.py": "2dee71dbed6bdc33ff68b17db4f94fdfdb70cb9b94dc5482604b5e3b19ee1fe8",
+  "packages/noether_physics/src/noether_physics/coupling.py": "4731c5f3a7d652c1da528c5f722ce43b6819752f7ab0f24dfcb99e6a0c123f54"
+ },
+ "config_sha256": "6c6fb9cdab75dd44627ed95d62a0f89209d9ee63f52ee775083e163e178bdbc4",
+ "telemetry_sha256": {
+  "P01_fast.parquet": "cdace65b7a239e103403206f3a2531e83f0d219c0322e9ddc470287ee49ed68c",
+  "P01_slow.parquet": "9f6601a49c5aa6d2863c8416ca082be4cc992cd85f067f190e45a8189f410e9a",
+  "P02_fast.parquet": "15c84d36086df20db8bccac36775a078ff196ba15d25bfeb7f8babca4ad3a180",
+  "P02_slow.parquet": "4b2ac40be6d3efc5607a88818ceb12fb3c84f9cbbf343a212880400da0babd80",
+  "P03_fast.parquet": "b1adf7a59d6617469d69f2db58e4401fb404f5c87342c8cd7996447542488b0b",
+  "P03_slow.parquet": "f603420f9b05f438d32db9a3b864271c1714bb23609fcf60c0512a7eb902b9de",
+  "P04_fast.parquet": "9b093dd6d1491e13fc3fc4b61551d0d080b62391a2a6119ab569507c9f6cb6e0",
+  "P04_slow.parquet": "f5b9e5264670a22c751b7c5d4703ff5e02d6fa0eac0b3772105f34a90442c4ed",
+  "P05_fast.parquet": "3fb6cf8cac9e68fd457248aeae1795c7666de13fac0eda0a4320edd6d83ee5dd",
+  "P05_slow.parquet": "3a0439d83806eef777a2f01d4352ab07719c2386c2659c2e2c364b68c53930bf",
+  "P06_fast.parquet": "696271f30c77601d76720bf63c73506ce41a442d597a90fa4e3aeb51d5c1f03b",
+  "P06_slow.parquet": "16d9bcc4b4ee14cf6945e84081269e8fd535e1ab19e75003b72c68266e21d121",
+  "P07_fast.parquet": "bf3c4f929d05e7a274e7c0ae7b6daa061fdb91c40d62c5c8434f261386744d3e",
+  "P07_slow.parquet": "cf7a834eb62e3f4086aa97de2e626e99efc052d75c82c76c22d13bc3b128f445",
+  "P08_fast.parquet": "edbd992a161cd9f24eaa8c518820c9c64a7bdad85367ed54ed9a67bd6542c326",
+  "P08_slow.parquet": "11053e344209335677696820534268b92f7b5f6af5bb566672ac271808ed4af1",
+  "P09_fast.parquet": "9f92983a7594f09fd55c46f492bdb7e776f8dd7357d9cb47b9b9ffe36477c01b",
+  "P09_slow.parquet": "f80fdfcda80af3aed141a9707ce48c2893a188500f6642a24b5ddbcbc3cf9ad6",
+  "P10_fast.parquet": "d328aca57fa898ce32e7943e6967d430a1555aa208f1dd67bcf5523b0c029f9a",
+  "P10_slow.parquet": "67d7b5a1d1dfbf9caa454616b3d6159a5e4b0cebd5ab62cf3c94ab765cc528d3",
+  "P11_fast.parquet": "38f6b2a98fd46fe47f6278d2322b2961355d84be3d7e9bdc210f3bdeece8469f",
+  "P11_slow.parquet": "18f4d8b4f5b9a750a9a71b8ec53736b16e8fbb42d47c573b95f2857f109ec2f9",
+  "P12_fast.parquet": "69d0ceb986e668f8b61817ba4f9b385e3cce56173d3a90fc515c78e8cffa0914",
+  "P12_slow.parquet": "c0d8e4de449f378f052b35898cf5e1bda2f1e3a653ee667883889c569e421a86"
+ },
+ "outer_scale_sensitivity": {
+  "higher_order_gb_assumed": 4747.965416666667,
+  "higher_order_gb_infinite_outer_scale": 4144.9802500000005,
+  "r0_ratio_infinite_vs_assumed": 1.3390854985292513
+ },
+ "summary": {
+  "audit": {
+   "possible_gb": 33784.0,
+   "delivered_gb": 26027.225,
+   "lost_gb": 7756.7750000000015,
+   "delivered_fraction": 0.7704009294340516,
+   "shapley_gb": {
+    "cloud": 822.025,
+    "scintillation": 60.47849999999973,
+    "tilt_residual": 899.0041666666665,
+    "vibration": 123.19175000000003,
+    "static_optics": 277.84491666666673,
+    "higher_order_turbulence": 4747.965416666667,
+    "ephemeris": 420.0363333333335,
+    "keyhole": 185.99999999999977,
+    "nominal_acquisition": 219.12891666666707
+   },
+   "link_budget_residual_gb": 1.1000000000003638,
+   "fix_gains_gb": {
+    "fresh_ephemeris": 700.63,
+    "keyhole_tracking": 186.0,
+    "vibration_fix": 232.8699999999999,
+    "refocus": 528.0099999999998,
+    "faster_tilt_loop": 835.7850000000004,
+    "all_practical_fixes": 2465.465,
+    "low_order_ao_upper_bound": 5173.130000000001
+   }
+  },
+  "truth": {
+   "possible_gb": 33784.0,
+   "delivered_gb": 26027.975000000002,
+   "lost_gb": 7756.024999999998,
+   "delivered_fraction": 0.7704231292919725,
+   "shapley_gb": {
+    "cloud": 849.7090833333333,
+    "scintillation": 67.08649999999957,
+    "tilt_residual": 931.0792499999998,
+    "vibration": 124.30091666666692,
+    "static_optics": 243.43683333333325,
+    "higher_order_turbulence": 4735.120666666668,
+    "ephemeris": 402.6832500000004,
+    "keyhole": 185.99999999999972,
+    "nominal_acquisition": 216.6085000000003
+   },
+   "link_budget_residual_gb": 0.0,
+   "fix_gains_gb": {
+    "fresh_ephemeris": 673.7200000000001,
+    "keyhole_tracking": 185.99999999999955,
+    "vibration_fix": 235.97000000000025,
+    "refocus": 455.80499999999995,
+    "faster_tilt_loop": 907.329999999999,
+    "all_practical_fixes": 2452.9399999999982,
+    "low_order_ao_upper_bound": 5197.405
+   }
+  },
+  "cause_comparison": {
+   "cloud": {
+    "audit_gb": 822.025,
+    "truth_gb": 849.7090833333333,
+    "difference_gb": -27.68408333333332
+   },
+   "scintillation": {
+    "audit_gb": 60.47849999999973,
+    "truth_gb": 67.08649999999957,
+    "difference_gb": -6.607999999999848
+   },
+   "tilt_residual": {
+    "audit_gb": 899.0041666666665,
+    "truth_gb": 931.0792499999998,
+    "difference_gb": -32.07508333333328
+   },
+   "vibration": {
+    "audit_gb": 123.19175000000003,
+    "truth_gb": 124.30091666666692,
+    "difference_gb": -1.1091666666668942
+   },
+   "static_optics": {
+    "audit_gb": 277.84491666666673,
+    "truth_gb": 243.43683333333325,
+    "difference_gb": 34.40808333333348
+   },
+   "higher_order_turbulence": {
+    "audit_gb": 4747.965416666667,
+    "truth_gb": 4735.120666666668,
+    "difference_gb": 12.844749999999294
+   },
+   "ephemeris": {
+    "audit_gb": 420.0363333333335,
+    "truth_gb": 402.6832500000004,
+    "difference_gb": 17.35308333333313
+   },
+   "keyhole": {
+    "audit_gb": 185.99999999999977,
+    "truth_gb": 185.99999999999972,
+    "difference_gb": 5.684341886080802e-14
+   },
+   "nominal_acquisition": {
+    "audit_gb": 219.12891666666707,
+    "truth_gb": 216.6085000000003,
+    "difference_gb": 2.520416666666762
+   }
+  },
+  "fix_comparison": {
+   "fresh_ephemeris": {
+    "audit_gb": 700.63,
+    "truth_gb": 673.7200000000001
+   },
+   "keyhole_tracking": {
+    "audit_gb": 186.0,
+    "truth_gb": 185.99999999999955
+   },
+   "vibration_fix": {
+    "audit_gb": 232.8699999999999,
+    "truth_gb": 235.97000000000025
+   },
+   "refocus": {
+    "audit_gb": 528.0099999999998,
+    "truth_gb": 455.80499999999995
+   },
+   "faster_tilt_loop": {
+    "audit_gb": 835.7850000000004,
+    "truth_gb": 907.329999999999
+   },
+   "all_practical_fixes": {
+    "audit_gb": 2465.465,
+    "truth_gb": 2452.9399999999982
+   },
+   "low_order_ao_upper_bound": {
+    "audit_gb": 5173.130000000001,
+    "truth_gb": 5197.405
+   }
+  },
+  "per_pass_cause_abs_error_gb": {
+   "max": 18.669583333333378,
+   "mean": 1.8164305555555487
+  },
+  "top_cause_agreement": {
+   "passes": 12,
+   "matches": 12
+  }
+ }
+}

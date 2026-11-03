@@ -1,0 +1,7 @@
+{
+  "result_kind": "simulation",
+  "metrics_sha256": "3f1981ba4ecf35689533e21a26581eb34f7e4880193cc42c8ff347e40b854639",
+  "config_sha256": "6c6fb9cdab75dd44627ed95d62a0f89209d9ee63f52ee775083e163e178bdbc4",
+  "coupling_tables_sha256": "2f048d252ed44c77eacdb5639394db0ff0dd781f9fb33559b3267738bad73e13",
+  "report_sha256": "8ab83c9b2119b3c1ad3313c9948cbf2c4e92cebb9a5b046c92d1d5568d381306"
+}
