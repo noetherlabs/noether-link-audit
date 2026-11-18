@@ -14,7 +14,7 @@ import numpy as np
 import scipy  # type: ignore[import-untyped]
 import yaml
 
-from .attribution import Attribution, LossModel, shapley
+from .attribution import Attribution, LossModel, measurement_contract, shapley
 from .audit import Auditor, AuditSettings, PassFeatures
 from .coupling_tables import TIP_TILT, load_or_build
 from .simulate import (
@@ -77,6 +77,7 @@ def _attribution_dict(a: Attribution) -> dict[str, Any]:
     return {
         "possible_gb": a.possible_gb,
         "delivered_gb": a.delivered_gb,
+        "threshold_delivered_gb": a.delivered_gb,
         "all_causes_removed_gb": a.all_removed_gb,
         "link_budget_residual_gb": a.link_budget_residual_gb,
         "shapley_gb": a.shapley_gb,
@@ -195,6 +196,7 @@ def run_sample(config_path: Path, output: Path, work: Path) -> dict[str, Any]:
     payload: dict[str, Any] = {
         "schema": "link_audit_sample_v1",
         "result_kind": "simulation",
+        "measurement_contract": measurement_contract(),
         "scope": "synthetic_telemetry_from_reduced_order_model_of_hypothetical_station",
         "experiment_id": raw["experiment_id"],
         "station": station.metadata(),

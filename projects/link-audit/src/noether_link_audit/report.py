@@ -16,7 +16,7 @@ from .audit import PassFeatures  # noqa: E402
 from .simulate import CAUSES  # noqa: E402
 
 CAUSE_LABELS = {
-    "higher_order_turbulence": "Higher-order turbulence",
+    "higher_order_turbulence": "Residual coupling (turbulence model)",
     "tilt_residual": "Tip-tilt residual",
     "vibration": "Structural vibration",
     "static_optics": "Static coupling loss",
@@ -46,7 +46,7 @@ FIX_SHORT = {
     "vibration_fix": "Vibration fix",
     "keyhole_tracking": "Keyhole-aware tracking",
     "all_practical_fixes": "All five together",
-    "low_order_ao_upper_bound": "Ideal 11-mode AO bound",
+    "low_order_ao_upper_bound": "Optimistic 11-mode AO scenario",
 }
 
 
@@ -115,7 +115,7 @@ def _fix_labels(payload: dict[str, Any], found: dict[str, Any]) -> dict[str, str
         "vibration_fix": f"Remove or notch the {vib} vibration ({_nights(found['vibration'])})",
         "keyhole_tracking": "Keyhole-aware tracking for near-zenith passes",
         "all_practical_fixes": "All five together",
-        "low_order_ao_upper_bound": "Ideal correction of the first 11 Zernike modes (upper bound)",
+        "low_order_ao_upper_bound": "Ideal correction of the first 11 Zernike modes (model scenario)",
     }
 
 
@@ -134,7 +134,7 @@ EFFORT = {
 def _figure_waterfall(payload: dict[str, Any], path: Path) -> None:
     audit = payload["summary"]["audit"]
     causes = sorted(CAUSES, key=lambda c: -audit["shapley_gb"][c])
-    labels = ["Possible"] + [CAUSE_LABELS[c] for c in causes] + ["Delivered"]
+    labels = ["Possible proxy"] + [CAUSE_LABELS[c] for c in causes] + ["Threshold proxy"]
     fig, ax = plt.subplots(figsize=(9.5, 4.6))
     level = audit["possible_gb"]
     ax.bar(0, level, color="#cbd5e0", width=0.7)
@@ -150,8 +150,8 @@ def _figure_waterfall(payload: dict[str, Any], path: Path) -> None:
     ax.text(len(labels) - 1, audit["delivered_gb"] * 1.01, _gb(audit["delivered_gb"]), ha="center", va="bottom", fontsize=8)
     ax.text(0, audit["possible_gb"] * 1.01, _gb(audit["possible_gb"]), ha="center", va="bottom", fontsize=8)
     ax.set_xticks(range(len(labels)), labels, rotation=35, ha="right", fontsize=8)
-    ax.set_ylabel("Data over 12 passes (Gb)")
-    ax.set_title("Where the data went (audit estimate, Shapley attribution)", fontsize=10, loc="left")
+    ax.set_ylabel("Threshold data proxy (Gb)")
+    ax.set_title("Model-conditional loss allocation", fontsize=10, loc="left")
     ax.set_ylim(audit["delivered_gb"] * 0.6, audit["possible_gb"] * 1.06)
     ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:,.0f}"))
     _style(ax)
@@ -164,15 +164,15 @@ def _figure_passes(payload: dict[str, Any], path: Path) -> None:
     passes = payload["passes"]
     fig, ax = plt.subplots(figsize=(9.5, 4.2))
     x = np.arange(len(passes))
-    ax.bar(x, [p["audit"]["attribution"]["delivered_gb"] for p in passes], color=COLORS["delivered"], label="Delivered", width=0.72)
+    ax.bar(x, [p["audit"]["attribution"]["delivered_gb"] for p in passes], color=COLORS["delivered"], label="Threshold proxy", width=0.72)
     bottom = np.array([p["audit"]["attribution"]["delivered_gb"] for p in passes])
     for cause in sorted(CAUSES, key=lambda c: -payload["summary"]["audit"]["shapley_gb"][c]):
         values = np.array([p["audit"]["attribution"]["shapley_gb"][cause] for p in passes])
         ax.bar(x, values, bottom=bottom, color=COLORS[cause], label=CAUSE_LABELS[cause], width=0.72)
         bottom = bottom + values
     ax.set_xticks(x, [f"{p['pass_id']}\n{p['max_elevation_deg']:.0f}°" for p in passes], fontsize=8)
-    ax.set_ylabel("Gb per pass")
-    ax.set_title("Delivered and lost data per pass (label: pass, maximum elevation)", fontsize=10, loc="left")
+    ax.set_ylabel("Threshold data proxy (Gb per pass)")
+    ax.set_title("Threshold data proxy and modeled losses (label: pass, maximum elevation)", fontsize=10, loc="left")
     ax.legend(fontsize=7, ncol=2, frameon=False, loc="upper left", bbox_to_anchor=(1.0, 1.0))
     _style(ax)
     fig.tight_layout()
@@ -299,8 +299,8 @@ def _figure_validation(payload: dict[str, Any], path: Path) -> None:
     axes[0].bar(x + 0.2, [comparison[c]["audit_gb"] for c in causes], width=0.4, color="#2b6cb0", label="Audit from logs")
     axes[0].set_xticks(x, [CAUSE_LABELS[c] for c in causes], rotation=35, ha="right", fontsize=7.5)
     axes[0].set_yscale("log")
-    axes[0].set_ylabel("Lost data attributed (Gb, log scale)")
-    axes[0].set_title("Attribution by cause", fontsize=10, loc="left")
+    axes[0].set_ylabel("Allocated proxy deficit (Gb, log scale)")
+    axes[0].set_title("Model-conditional loss allocation", fontsize=10, loc="left")
     axes[0].legend(fontsize=8, frameon=False)
     x2 = np.arange(len(fix_names))
     axes[1].bar(x2 - 0.2, [fixes[k]["truth_gb"] for k in fix_names], width=0.4, color="#a0aec0")
@@ -311,13 +311,13 @@ def _figure_validation(payload: dict[str, Any], path: Path) -> None:
         "refocus": "Refocus",
         "vibration_fix": "Vibration",
         "keyhole_tracking": "Keyhole",
-        "low_order_ao_upper_bound": "Ideal AO bound",
+        "low_order_ao_upper_bound": "Ideal AO scenario",
     }
     axes[1].set_xticks(x2, [short[k] for k in fix_names], rotation=35, ha="right", fontsize=7.5)
     axes[1].set_yscale("log")
     axes[1].set_ylim(bottom=100)
-    axes[1].set_ylabel("Data recovered by fix (Gb, log scale)")
-    axes[1].set_title("Recovered data by fix", fontsize=10, loc="left")
+    axes[1].set_ylabel("Modeled proxy increase (Gb, log scale)")
+    axes[1].set_title("Modeled intervention gain", fontsize=10, loc="left")
     for ax in axes:
         _style(ax)
     fig.tight_layout()
@@ -370,29 +370,36 @@ def _markdown(payload: dict[str, Any], found: dict[str, Any], dropout_pass: str 
         "This is the report format we return for a free audit. The audit read only what a station logs, plus "
         "the station's declared configuration. It did not see the simulator's settings.\n"
     )
+    add(
+        "> **Metric and inference.** Gigabits below are a power-threshold data proxy: locked time above "
+        "a fixed sensitivity multiplied by a fixed rate, not measured modem goodput. Loss allocation and "
+        "intervention gains are conditional on the model. Shapley values do not establish physical causes. "
+        "The simulator and audit share the coupling model; agreement is a synthetic estimation check.\n"
+    )
 
     add("## Summary\n")
     add(
         f"- **{len(passes)} passes over {len(nights)} nights.** At {st['data_rate_gbps']:.0f} Gbps above "
         f"{st['min_elevation_deg']:.0f}° elevation, the passes could have carried {_gb(audit['possible_gb'])} Gb. "
-        f"The station delivered {_gb(audit['delivered_gb'])} Gb ({_pct(audit['delivered_fraction'])}), so "
-        f"{_gb(lost)} Gb were lost."
+        f"The threshold proxy is {_gb(audit['delivered_gb'])} Gb ({_pct(audit['delivered_fraction'])}), leaving "
+        f"a modeled deficit of {_gb(lost)} Gb."
     )
     add(
-        f"- **Five fixes recover {_gb(fixes['all_practical_fixes'])} Gb together**, "
-        f"{_pct(fixes['all_practical_fixes'] / lost)} of the lost data. They are ranked below by recovered data; "
-        "the effort column is our judgment. The cheapest, fresh ephemeris, is an operations change worth "
-        f"{_gb(fixes['fresh_ephemeris'])} Gb."
+        f"- **Five interventions together add {_gb(fixes['all_practical_fixes'])} Gb in the model**, "
+        f"{_pct(fixes['all_practical_fixes'] / lost)} of the proxy deficit. They are ranked by modeled gain; "
+        "the effort column is our judgment. Fresh ephemeris is modeled as an operations change with "
+        f"{_gb(fixes['fresh_ephemeris'])} Gb of proxy gain."
     )
     add(
-        f"- **The largest single loss is higher-order turbulence: {_gb(ho)} Gb ({_pct(ho / lost)} of losses)**, "
-        "concentrated at low elevation. Tip-tilt correction cannot recover it. Ideal correction of the first 11 "
-        f"Zernike modes would recover at most {_gb(fixes['low_order_ao_upper_bound'])} Gb; a real system recovers less."
+        f"- **The largest modeled category is residual coupling: {_gb(ho)} Gb ({_pct(ho / lost)} of the deficit)**, "
+        "concentrated at low elevation. The audit assigns this residual to higher-order turbulence; it does not "
+        "independently identify that mechanism. Ideal correction of the first 11 Zernike modes gives "
+        f"{_gb(fixes['low_order_ao_upper_bound'])} Gb in an optimistic scenario, not a general upper bound."
     )
     if found["cloud"]:
         add(
-            f"- **Cloud cost {_gb(audit['shapley_gb']['cloud'])} Gb.** That is a site and scheduling question, not a "
-            "station fault."
+            f"- **The model assigns {_gb(audit['shapley_gb']['cloud'])} Gb to cloud.** Independent weather "
+            "measurements are needed to confirm this diagnosis on a station."
         )
     top = summary["top_cause_agreement"]
     dt_errors = [
@@ -402,33 +409,34 @@ def _markdown(payload: dict[str, Any], found: dict[str, Any], dropout_pass: str 
     ]
     combined = summary["fix_comparison"]["all_practical_fixes"]
     add(
-        f"- **Checked against ground truth.** The audit named the right largest cause on {top['matches']} of "
+        f"- **Checked against simulator labels.** The largest modeled category matched on {top['matches']} of "
         f"{top['passes']} passes"
         + (f", recovered the planted ephemeris offsets within {1e3 * max(dt_errors):.0f} ms" if dt_errors else "")
-        + ", and estimated the combined recovery within "
+        + ", and estimated the combined model gain within "
         f"{max(1, round(abs(100 * (combined['audit_gb'] - combined['truth_gb']) / combined['truth_gb'])))}% "
-        "of the truth. Details are under *How we checked this sample*."
+        "of the simulator's counterfactual. Details are under *How we checked this sample*."
     )
     add("")
-    add("| Rank | Fix | Data recovered (Gb) | Share of lost data | Typical effort |")
+    add("| Rank | Intervention scenario | Proxy gain (Gb) | Share of proxy deficit | Typical effort |")
     add("|---|---|---:|---:|---|")
     for rank, key in enumerate(ranked, start=1):
         add(f"| {rank} | {labels[key]} | {_gb(fixes[key])} | {_pct(fixes[key] / lost)} | {EFFORT[key]} |")
     add(f"| | {labels['all_practical_fixes']} | {_gb(fixes['all_practical_fixes'])} | {_pct(fixes['all_practical_fixes'] / lost)} | |")
     add(
-        "\nRecovered data for each fix is estimated alone, from the current state. Fixes overlap, so the combined "
+        "\nEach model scenario is estimated alone, from the current state. Interventions overlap, so the combined "
         "row is computed directly rather than summed.\n"
     )
 
-    add("## Where the data went\n")
+    add("## Model-conditional loss allocation\n")
     add("![Loss waterfall](figures/waterfall.png)\n")
     add(
-        "Each lost gigabit is attributed to a cause with Shapley values: every cause is removed in every order, and "
-        "its average marginal effect is its share. Causes interact (a cloud dropout costs more when reacquisition "
-        "needs a long search), and Shapley values split that interaction fairly. They sum to the data recovered "
-        "when every cause is removed.\n"
+        "Shapley values allocate the modeled proxy deficit: every model term is removed in every order, and "
+        "its average marginal effect is its share. Terms interact (a cloud dropout costs more when reacquisition "
+        "needs a long search). Their allocations sum to the all-terms-removed model gain. This accounting "
+        "identity does not establish that the terms are identifiable from the observed signals; different "
+        "physical explanations can fit the same telemetry.\n"
     )
-    add("| Cause | Lost data (Gb) | Share |")
+    add("| Model category | Proxy deficit (Gb) | Share |")
     add("|---|---:|---:|")
     for cause in sorted(CAUSES, key=lambda c: -audit["shapley_gb"][c]):
         add(f"| {CAUSE_LABELS[cause]} | {_gb(audit['shapley_gb'][cause])} | {_pct(audit['shapley_gb'][cause] / lost)} |")
@@ -447,7 +455,7 @@ def _markdown(payload: dict[str, Any], found: dict[str, Any], dropout_pass: str 
     _finding_cloud(add, payload, found)
 
     add("## Per-pass results\n")
-    add("| Pass | Night | Max elevation | Possible (Gb) | Delivered (Gb) | Delivered | Largest cause | Second cause |")
+    add("| Pass | Night | Max elevation | Possible proxy (Gb) | Threshold proxy (Gb) | Fraction | Largest model category | Second category |")
     add("|---|---|---:|---:|---:|---:|---|---|")
     for p in passes:
         a = p["audit"]["attribution"]
@@ -480,7 +488,7 @@ def _finding_tilt(add: Any, payload: dict[str, Any], labels: dict[str, str], fix
     rms = [p["audit"]["estimates"]["mean_tilt_residual_rms_rad"] * 1e6 for p in passes]
     theta_c = payload["coupling_model"]["theta_c_rad"] * 1e6
     shap = payload["summary"]["audit"]["shapley_gb"]["tilt_residual"]
-    add("### Tip-tilt residual: the loop is the largest fixable loss\n")
+    add("### Tip-tilt residual: the largest modeled intervention gain\n")
     add(
         f"The tracking residual averages {min(rms):.2f} to {max(rms):.2f} µrad RMS per axis across passes. Single-mode "
         f"coupling falls by 1/e at a {theta_c:.2f} µrad offset in this optical design, so sub-microradian jitter still "
@@ -488,8 +496,8 @@ def _finding_tilt(add: Any, payload: dict[str, Any], labels: dict[str, str], fix
     )
     add(
         f"Raising the error-rejection bandwidth from {payload['station']['rejection_bandwidth_hz']:.0f} Hz to "
-        f"{payload['audit_settings']['what_if_bandwidth_hz']:.0f} Hz would recover an estimated "
-        f"{_gb(fixes['faster_tilt_loop'])} Gb. We estimated this from the pseudo-open-loop tilt (residual plus FSM "
+        f"{payload['audit_settings']['what_if_bandwidth_hz']:.0f} Hz adds "
+        f"{_gb(fixes['faster_tilt_loop'])} Gb in the proxy model. We estimated this from pseudo-open-loop tilt (residual plus FSM "
         "command) and the declared loop model, with the same 2-frame latency at twice the frame rate and the same "
         "noise spectral density. Tracking-sensor noise is included.\n"
     )
@@ -532,7 +540,7 @@ def _finding_ephemeris(
     add(
         f"The acquisition model fitted across all passes gives {cal['acquisition_nominal_s']:.2f} s nominal plus "
         f"{cal['acquisition_search_s_per_area']:.2f} s per extra acquisition-field area. Attributed loss: {_gb(shap)} Gb. "
-        f"Fresh ephemeris before every pass recovers an estimated {_gb(fixes['fresh_ephemeris'])} Gb, which "
+        f"The fresh-ephemeris scenario adds {_gb(fixes['fresh_ephemeris'])} Gb to the proxy, which "
         "includes the share of cloud dropouts that the search prolonged.\n"
     )
 
@@ -548,10 +556,11 @@ def _finding_static(add: Any, payload: dict[str, Any], found: dict[str, Any], la
         f"After the turbulence and tilt terms are removed, the fiber-to-tracking power ratio sits lower on one "
         f"night than on all others: {values}, relative to the station's median pass. The other passes agree "
         f"within ±{max(others):.2f} dB. A loss that is constant across a whole night, independent of seeing and "
-        "elevation, points to focus or fiber alignment, not the atmosphere."
+        "elevation is consistent with focus or fiber alignment, but throughput changes, calibration error "
+        "and model discrepancy can produce a similar offset. These signals alone do not distinguish them."
     )
     add(
-        f"Refocusing recovers an estimated {_gb(fixes['refocus'])} Gb. This estimate treats the loss as a constant "
+        f"The refocus scenario adds {_gb(fixes['refocus'])} Gb to the proxy. It treats the loss as a constant "
         "dB offset, which overstates the gain in deep turbulence fades; see the validation section.\n"
     )
 
@@ -571,7 +580,8 @@ def _finding_vibration(add: Any, payload: dict[str, Any], found: dict[str, Any],
         "drive."
     )
     add(
-        f"Removing the source, or notching it in the controller, recovers an estimated {_gb(fixes['vibration_fix'])} Gb.\n"
+        f"The ideal line-removal scenario adds {_gb(fixes['vibration_fix'])} Gb to the proxy. A controller notch "
+        "would need a separate stability, delay and receiver-performance check.\n"
     )
     add("![Vibration line](figures/vibration.png)\n")
 
@@ -589,8 +599,8 @@ def _finding_keyhole(add: Any, payload: dict[str, Any], found: dict[str, Any], l
         f"the lag exceeded the FSM range and lock dropped for {e['stop_s'] - e['start_s']:.1f} s."
     )
     add(
-        f"Keyhole-aware tracking (pre-rotating azimuth, or over-the-top tracking where the mount allows it) recovers "
-        f"{_gb(fixes['keyhole_tracking'])} Gb.\n"
+        f"The keyhole-removal scenario adds {_gb(fixes['keyhole_tracking'])} Gb to the proxy. Pre-rotating azimuth "
+        "or over-the-top tracking requires a separate check of the mount's capabilities and limits.\n"
     )
     add("![Keyhole](figures/keyhole.png)\n")
 
@@ -605,18 +615,20 @@ def _finding_turbulence(add: Any, payload: dict[str, Any], fixes: dict[str, floa
     def mean_loss_db(value: float) -> float:
         return -float(np.interp(math.log(value), log_grid, cm["mean_log_db_tip_tilt"]))
 
-    add("### Higher-order turbulence: the largest loss, and the hardest to fix\n")
+    add("### Residual coupling under the turbulence model\n")
     add(
         f"The audit estimates D/r0 at 1550 nm from the tracking data itself, between {min(d_over_r0):.2f} and "
         f"{max(d_over_r0):.2f} (median per pass). At these values the wavefront left after tip-tilt correction "
-        f"costs {mean_loss_db(min(d_over_r0)):.1f} to {mean_loss_db(max(d_over_r0)):.1f} dB of single-mode coupling "
-        f"on average, with deeper fades. It accounts for {_gb(ho)} Gb ({_pct(ho / lost)} of losses); passes below "
-        f"35° maximum elevation carry {_pct(share_low)} of it."
+        f"is modeled as {mean_loss_db(min(d_over_r0)):.1f} to {mean_loss_db(max(d_over_r0)):.1f} dB of single-mode "
+        f"coupling loss on average. The assigned residual is {_gb(ho)} Gb ({_pct(ho / lost)} of the proxy deficit); "
+        f"passes below 35° maximum elevation carry {_pct(share_low)} of it. Unmodeled aberrations, alignment "
+        "changes and measurement error can also enter this residual."
     )
     add(
-        f"Ideal correction of the first 11 Zernike modes would recover at most {_gb(fixes['low_order_ao_upper_bound'])} "
-        "Gb. That bound has no servo lag, noise or wavefront-sensor error. A real adaptive-optics system would "
-        "recover less, and this sample does not evaluate one. Cheaper levers to test first, also not evaluated "
+        f"The ideal first-11-Zernike scenario adds {_gb(fixes['low_order_ao_upper_bound'])} Gb to the proxy. "
+        "It maps the residual's ranks to ideal modal-correction coupling quantiles with no servo lag, noise "
+        "or wavefront-sensor error. This is an optimistic model scenario, not a proven upper bound on a "
+        "real receiver. This sample does not evaluate an AO controller. Other levers to test, also not evaluated "
         "here: raise the minimum elevation, or lower the data rate at low elevation.\n"
     )
 
@@ -632,7 +644,8 @@ def _finding_cloud(add: Any, payload: dict[str, Any], found: dict[str, Any]) -> 
         f"{p['pass_id']} ran under patchy cirrus: the tracking power sat {e['mean_extinction_db']:.1f} dB below the "
         f"clear-sky model on average, with peaks near {e['max_extinction_db']:.0f} dB. The clear-sky model was "
         f"fitted across all passes ({payload['calibration']['clear_sky_extinction_db_per_airmass']:.2f} dB per airmass). "
-        "No station change recovers this; site diversity or cloud-aware scheduling does.\n"
+        "Cloud is the model's explanation for this attenuation. Confirm it with weather measurements before "
+        "choosing site diversity or scheduling as the response; receiver control does not remove opaque cloud.\n"
     )
 
 
@@ -645,8 +658,9 @@ def _validation(add: Any, payload: dict[str, Any]) -> None:
         "Because the telemetry is synthetic, the simulator knows every planted cause. The audit's estimates were "
         "compared with that ground truth after the audit ran. The audit and the simulator share one coupling "
         "model: scalar diffraction overlap on HCIPy phase screens, tabulated with the simulator's outer scale. "
-        "This check therefore tests estimation from telemetry, not the coupling physics, which is qualified "
-        "separately in [docs/fiber-coupling.md](../../docs/fiber-coupling.md).\n"
+        "This tests estimation under shared assumptions, not causal identification on an instrument. The "
+        "scalar coupling implementation has separate analytic and numerical checks in "
+        "[docs/fiber-coupling.md](../../docs/fiber-coupling.md).\n"
     )
     add("![Validation](figures/validation.png)\n")
     add("**Recovered parameters**\n")
@@ -713,16 +727,16 @@ def _validation(add: Any, payload: dict[str, Any]) -> None:
     ]
     add(f"| False detections (timing or vibration) | {', '.join(planted_false) or 'none'} | none |")
     add("")
-    add("**Attribution of lost data, all passes**\n")
-    add("| Cause | Audit (Gb) | Truth (Gb) | Difference |")
+    add("**Model-conditional loss allocation, all passes**\n")
+    add("| Model category | Audit proxy (Gb) | Simulator proxy (Gb) | Difference |")
     add("|---|---:|---:|---:|")
     for cause in sorted(CAUSES, key=lambda c: -comparison[c]["truth_gb"]):
         a, t = comparison[cause]["audit_gb"], comparison[cause]["truth_gb"]
         diff = _signed_pct(a, t) if t > 1 else f"{a - t:+.0f} Gb"
         add(f"| {CAUSE_LABELS[cause]} | {_gb(a)} | {_gb(t)} | {diff} |")
     add("")
-    add("**Recovered data by fix**\n")
-    add("| Fix | Audit (Gb) | Truth (Gb) | Difference |")
+    add("**Modeled proxy gain by intervention**\n")
+    add("| Scenario | Audit proxy (Gb) | Simulator proxy (Gb) | Difference |")
     add("|---|---:|---:|---:|")
     for key in [*FIX_ORDER, "all_practical_fixes", "low_order_ao_upper_bound"]:
         a, t = fixes[key]["audit_gb"], fixes[key]["truth_gb"]
@@ -818,9 +832,10 @@ def _method(add: Any, payload: dict[str, Any]) -> None:
         "Keyhole from encoder lag. Acquisition time fitted against predicted open-loop error."
     )
     add(
-        "- **Data accounting.** A sample counts as delivered when the station is locked and fiber power is at or "
-        "above sensitivity. Removing a cause adds its estimated dB back and restores any lock time it blocked. "
-        "Shapley values attribute lost data; fixes are evaluated alone and together.\n"
+        "- **Data proxy.** Count samples with lock and fiber power at or above sensitivity, then multiply by "
+        "sample duration and fixed data rate. This is not measured modem goodput. Removing a model term adds "
+        "its estimated dB correction and restores its assumed lock time. Shapley values allocate this model's "
+        "gain; intervention scenarios are evaluated alone and together, not experimentally verified.\n"
     )
 
 
@@ -836,10 +851,13 @@ def _limitations(add: Any, payload: dict[str, Any]) -> None:
         "- Data is modeled from power above a fixed sensitivity, with no FEC, interleaving or rate adaptation. A real "
         "audit would use the modem's frame counters.",
         "- Fix estimates hold the rest of the system fixed. A faster loop assumes the same latency in frames and the "
-        "same noise spectral density. The adaptive-optics bound is ideal modal correction with no servo error.",
+        "same noise spectral density. The adaptive-optics scenario uses ideal modal correction with no servo error; "
+        "its legacy upper_bound field name does not establish a general bound.",
+        "- Unexplained coupling residual is assigned to higher-order turbulence by the model. Shapley efficiency "
+        "does not make that assignment identifiable or distinguish model error from a physical loss mechanism.",
         "- Stations with different receivers (multi-mode or photonic-lantern coupling, mode-converter optics, other "
-        "adaptive optics) need their own coupling model. The timing, acquisition, keyhole, cloud and accounting "
-        "steps carry over unchanged.",
+        "adaptive optics) need their own coupling model. Timing, acquisition, keyhole, cloud and accounting "
+        "steps also require receiver-specific calibration and validation.",
     ):
         add(line)
     add("")
@@ -850,7 +868,7 @@ def _checklist(add: Any) -> None:
     add("| Data | Rate | Used for |")
     add("|---|---|---|")
     for row in (
-        ("Fiber (or receiver) power", "≥ 1 kHz", "Delivered data, fades, coupling"),
+        ("Fiber (or receiver) power", "≥ 1 kHz", "Power margin, fades, coupling"),
         ("Tracking-sensor power", "Loop rate", "Extinction, scintillation, coupling ratio"),
         ("Tracking residual x/y and FSM command x/y", "Loop rate, in bursts if needed", "Tilt loss, noise, vibration, r0, loop what-ifs"),
         ("Commanded and encoder az/el", "≥ 10 Hz", "Angular rate, keyhole, mount lag"),
@@ -862,4 +880,5 @@ def _checklist(add: Any) -> None:
         ("Weather, seeing monitor, all-sky camera (optional)", "Any", "Anchors r0 and cloud attribution"),
     ):
         add(f"| {row[0]} | {row[1]} | {row[2]} |")
-    add("\nTen to twenty passes are enough for a first report. Nothing runs on, or connects to, the station.\n")
+    add("\nStart with a representative export; required duration and pass diversity depend on the question. "
+        "This audit reads exported logs and does not connect to the station.\n")

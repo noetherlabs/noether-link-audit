@@ -1,10 +1,11 @@
-"""Counterfactual data accounting and Shapley attribution of lost data to causes.
+"""Power-threshold data proxy and model-conditional Shapley allocation.
 
 A pass is a sample series of received fiber power and lock state. Removing a
 cause adds its dB correction to the power series and/or restores lock on the
 samples it blocked. Data counts samples that are locked and above sensitivity.
-Shapley values split interacting causes fairly; they sum to the data recovered
-when every cause is removed.
+Shapley values allocate interactions in the supplied counterfactual model;
+their sum is its all-terms-removed increase. Neither the proxy nor this
+allocation measures modem goodput or identifies physical causes from logs.
 """
 
 from __future__ import annotations
@@ -17,6 +18,21 @@ from numpy.typing import NDArray
 
 Float32Array = NDArray[np.float32]
 BoolArray = NDArray[np.bool_]
+
+
+def measurement_contract() -> dict[str, str | bool]:
+    """Describe the existing metric without changing its legacy numeric fields."""
+    return {
+        "data_metric": "locked_power_threshold_proxy_gb",
+        "data_formula": "count(locked and power_dbm >= sensitivity_dbm) * sample_s * rate_gbps",
+        "measured_modem_goodput": False,
+        "attribution": "model_conditional_shapley_allocation",
+        "causal_identification": False,
+        "intervention_gains": "fixed_other_terms_model_scenarios",
+        "higher_order_turbulence": "unexplained_coupling_residual_assigned_by_model",
+        "low_order_ao_upper_bound": "legacy_key_for_optimistic_modal_scenario_not_general_bound",
+        "validation": "synthetic_estimation_with_shared_coupling_model",
+    }
 
 
 @dataclass
@@ -52,6 +68,7 @@ class LossModel:
     def delivered_gb(
         self, removed: frozenset[str] = frozenset(), extra_db: Float32Array | None = None
     ) -> float:
+        """Return the threshold proxy in Gb; legacy name, not modem goodput."""
         power = self.base_dbm.astype(np.float32, copy=True)
         for cause in removed:
             if cause in self.additive:

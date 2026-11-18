@@ -1,17 +1,21 @@
 # Noether Link Audit
 
-A telemetry-only link-loss audit for optical ground stations. It reads what a station already logs and attributes every lost gigabit to a cause, then estimates what each fix would recover. The causes it separates are turbulence, tip-tilt residual, vibration, static coupling loss, cloud, scintillation, ephemeris bias, keyhole and acquisition.
+A telemetry audit for optical ground stations. It uses power, tracking and lock logs to estimate loss mechanisms and compare proposed interventions under a declared receiver model. The model includes turbulence, tip-tilt residual, vibration, static coupling loss, cloud, scintillation, ephemeris bias, keyhole and acquisition.
 
 > **Simulation only.** The sample below runs the audit on synthetic telemetry from a reduced-order model of a hypothetical station. No physical bench, live optical link or on-sky performance is represented.
+
+The reported gigabits are a **power-threshold proxy**: locked time above a fixed sensitivity multiplied by a fixed data rate. They are not modem-measured goodput. Shapley values allocate the model's estimated loss; they do not establish physical causes from telemetry alone. In particular, unexplained coupling loss is assigned to the higher-order turbulence term by assumption. Estimated intervention gains need a controlled test before they can support a recovered-data claim.
 
 ## Sample report
 
 [results/link-audit-sample-v1/REPORT.md](results/link-audit-sample-v1/REPORT.md) covers twelve simulated LEO passes over five nights at a hypothetical 0.4 m station, with six kinds of planted fault. The audit read only the logs and the station's declared configuration. The simulator's ground truth was compared afterwards:
 
-- The audit named the right largest cause on 12 of 12 passes.
+- The largest modeled loss category matched the simulator's label on 12 of 12 passes.
 - It recovered the planted ephemeris offsets within 3 ms and found the 47 Hz vibration line.
-- For the five practical fixes together, it estimated 2,465 Gb recovered; the truth was 2,453 Gb.
+- For five interventions together, the estimated increase in the data proxy was 2,465 Gb; the simulator's counterfactual was 2,453 Gb.
 - The report lists where the audit is weakest: it overstates the refocus gain, understates scintillation, and depends on the assumed turbulence outer scale.
+
+The simulator and audit share the coupling model. This checks estimation within that model, not causal identification on a real receiver. The linked v1 report and metrics retain their original bytes and wording; interpret their “delivered,” “recovered” and “upper bound” labels as model outputs under the qualifications above. New reports make these distinctions explicit.
 
 ## Run
 
@@ -27,7 +31,7 @@ make link-audit-sample
 
 ## Use it on your station
 
-The audit needs logs, not access to your systems. The end of the report lists the data it uses. Write to founders@noether.one for a free audit of 10 to 20 passes.
+The audit starts with exported logs and a receiver configuration. The [receiver pilot protocol](docs/receiver-pilot.md) distinguishes observations, model estimates and the controlled measurements needed to evaluate a change. Write to founders@noether.one to discuss a representative sample and whether its signals can answer your question.
 
 ## Layout
 
