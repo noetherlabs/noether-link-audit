@@ -31,8 +31,9 @@ overlap between the incident field and the receiving mode:
 The [Gaussian overlap component](fiber-coupling.md) specifies the normalization
 and checks analytic limits and independent focal-plane calculations. A measured
 receiver may need a different mode, polarization model, or detector objective.
-The existing overlap implementation is a numerical reference; it is not an
-end-to-end differentiable receiver or a model of an identified instrument.
+The overlap component provides a numerical reference and an optional
+differentiable objective for real optical path at fixed pupil and geometry.
+It is not an end-to-end receiver model or a model of an identified instrument.
 
 Received fiber power also depends on incident flux and optical transmission.
 Phase correction cannot reconstruct light blocked by clouds or guarantee

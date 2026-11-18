@@ -29,6 +29,12 @@ make link-audit-sample
 
 `make link-audit-sample` regenerates the synthetic telemetry, the audit, the report and its figures in under a minute on a laptop. Rebuilding the committed coupling tables from scratch (delete `coupling_tables.json` first) adds about a minute. The telemetry is about 200 MB under `results/runs/` and is not committed. [metrics.json](results/link-audit-sample-v1/metrics.json) records every number in the report, with SHA-256 hashes of the sources, the configuration and each telemetry file.
 
+The [Gaussian receiver objective](docs/fiber-coupling.md#differentiating-optical-path)
+provides optional JAX gradients of coupling with respect to optical path, at
+fixed pupil transmission and receiver geometry. It supports composing actuator
+maps with an optical objective; analytic and independent numerical checks are
+included. It is a modelling component, not a trained receiver controller.
+
 ## Use it on your station
 
 The audit starts with exported logs and a receiver configuration. The [receiver pilot protocol](docs/receiver-pilot.md) distinguishes observations, model estimates and the controlled measurements needed to evaluate a change. Write to founders@noether.one to discuss a representative sample and whether its signals can answer your question.

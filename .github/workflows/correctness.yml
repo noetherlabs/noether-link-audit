@@ -1,0 +1,64 @@
+name: Receiver model correctness
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: receiver-model-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  correctness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [numpy, jax]
+    env:
+      JAX_PLATFORMS: cpu
+      JAX_ENABLE_X64: 'true'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      XLA_FLAGS: --xla_cpu_multi_thread_eigen=false
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      MPLBACKEND: Agg
+    steps:
+      - name: Check out the workflow revision
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Install the pinned environment manager
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2
+        with:
+          version: '0.13.7'
+          python-version: '3.12.0'
+          enable-cache: 'false'
+      - name: Install the numerical reference environment
+        if: matrix.backend == 'numpy'
+        run: uv sync --locked --extra dev
+      - name: Install the differentiable environment
+        if: matrix.backend == 'jax'
+        run: uv sync --locked --extra dev --extra differentiable
+      - name: Confirm optional backend is installed
+        if: matrix.backend == 'jax'
+        run: uv run --no-sync python -c 'import jax, jaxlib; assert jax.__version__ == jaxlib.__version__ == "0.10.2"; assert jax.default_backend() == "cpu"; assert jax.config.x64_enabled'
+      - name: Verify dependencies
+        run: uv pip check
+      - name: Check style
+        run: uv run --no-sync ruff check .
+      - name: Check numerical values and derivatives
+        run: uv run --no-sync pytest -ra --junitxml=correctness.xml
+      - name: Verify source and lock remain unchanged
+        if: always()
+        run: git diff --exit-code

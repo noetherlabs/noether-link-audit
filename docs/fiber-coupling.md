@@ -90,3 +90,87 @@ loses. It does not evaluate a controller.
 This qualifies a numerical component on stated analytic and sampled-field
 checks. It does not establish real-fiber accuracy, hardware performance,
 an end-to-end optical link model or safe autonomous control.
+
+
+## Differentiating optical path
+
+The optional JAX interface prepares the same fixed pupil and Gaussian geometry,
+then returns a scalar function of **real optical path difference in metres**:
+
+```sh
+uv sync --locked --extra dev --extra differentiable
+JAX_PLATFORMS=cpu JAX_ENABLE_X64=1 uv run --locked --extra differentiable python your_model.py
+```
+
+```python
+import jax
+import jax.numpy as jnp
+import numpy as np
+
+from noether_physics.differentiable import make_gaussian_fiber_objective
+
+# An illustrative sampled pupil; replace these constants with receiver geometry.
+n = 32
+pitch = 8e-5
+axis = (np.arange(n) - (n - 1) / 2) * pitch
+x, y = np.meshgrid(axis, axis)
+amplitude = (x*x + y*y <= 1e-6).astype(float)
+eta = make_gaussian_fiber_objective(
+    amplitude,
+    pixel_pitch_m=pitch,
+    wavelength_m=1.55e-6,
+    focal_length_m=0.1,
+    mode_radius_m=5e-5,
+)
+opd = jnp.asarray(8e-8 * (x*x - y*y) / 1e-6, dtype=jnp.float64)
+efficiency, gradient_per_metre = jax.jit(jax.value_and_grad(eta))(opd)
+```
+
+Enable JAX's 64-bit mode before constructing arrays or tracing the model. The
+library does not change process-wide configuration. Shape and dtype errors
+raise at evaluation or tracing. Eager evaluation rejects nonfinite OPD;
+under a JAX transformation it propagates to nonfinite output. The calling
+optimizer or study must reject and retain nonfinite values or gradients,
+including derivatives made unrepresentable by extreme physical scales. Finite output alone is not a calibration or sampling certificate.
+The optional interface is qualified with CPU float64 checks. Other precision
+or accelerator settings require separate numerical checks.
+
+Pupil transmission, pixel pitch, wavelength, focal length and Gaussian radius
+are **fixed preparation inputs**, not differentiable arguments. Preparing a
+new factory for a changed geometry does not supply a geometry derivative.
+This interface differentiates the specified optical objective; it does not
+identify an instrument or implement sensing, delay, actuator dynamics or a
+closed-loop controller.
+
+For exact cell weights $w_j$, fixed normalized amplitudes $A_j$, incident
+power $P$, full-plane mode power $Q=\pi/2$, and
+$s=\sum_j A_jw_j\exp(2\pi i d_j/\lambda)$, the derivative is
+
+$$
+\frac{\partial\eta}{\partial d_j}
+=-\frac{4\pi}{\lambda P Q}
+\operatorname{Im}\left[s^* A_jw_j e^{2\pi i d_j/\lambda}\right].
+$$
+
+The API accepts real OPD and returns a real objective, so an optimizer acts on
+real parameters even though the optical field is complex. It supports JAX
+`grad`, `jit` and `vmap`. For an actuator influence map $B$ converting commands
+$u$ to optical path, residual $d=d_0-Bu$ gives
+$\nabla_u\eta=-B^\mathsf{T}\nabla_d\eta$.
+Include a reflective mirror's surface-to-path factor of two exactly once in
+that map. Differentiating $1-\eta$ reverses the sign again.
+
+At destructive interference, nonzero incident power can give zero overlap
+and zero first derivative. This is a valid stationary point, not an error or
+a promise that gradient descent will escape it. Zero incident power is
+undefined and rejected. No denominator epsilon or clipping changes either
+case. OPD is reduced modulo wavelength before forming phase; the composed
+optical objective remains periodic across those wraps.
+
+The derivative checks include an exact two-cell interference solution,
+independent central differences of the NumPy reference, Gaussian tilt,
+piston and length scaling, blocked pupil samples, modal-command composition,
+and compiled/batched evaluation. These checks qualify numerical derivatives;
+they do not measure a learned controller's benefit or delivered link data.
+See [JAX's differentiation conventions](https://docs.jax.dev/en/latest/301/cookbook.html)
+and [64-bit configuration](https://docs.jax.dev/en/latest/101/default_dtypes.html).
