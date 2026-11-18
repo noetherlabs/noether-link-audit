@@ -21,6 +21,12 @@ The simulator and audit share the coupling model. This checks estimation within 
 
 Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
 
+The repository is a uv workspace. Link Audit depends on the independently
+installable [Noether Physics package](packages/noether_physics/README.md), which
+supports Python 3.11 and 3.12. The complete workspace retains the exact numerical
+versions used for the reference results; installing the physics package alone
+does not install the audit or its other dependencies.
+
 ```sh
 make setup
 make test
@@ -44,7 +50,7 @@ The audit starts with exported logs and a receiver configuration. The [receiver 
 | Path | Contents |
 |---|---|
 | `projects/link-audit/` | Audit, simulator, attribution and report code |
-| `packages/noether_physics/` | Qualified scalar overlap with a Gaussian fiber mode |
+| `packages/noether_physics/` | Independent `noether-physics` distribution: Gaussian overlap and optional derivatives |
 | `configs/link-audit-sample.yaml` | Sample scenario: station, link budget, nights and planted causes |
 | `docs/fiber-coupling.md` | Coupling method and its analytic checks |
 | `results/` | Sample report, metrics and the coupling comparison |

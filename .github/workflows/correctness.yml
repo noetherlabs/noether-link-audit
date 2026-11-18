@@ -57,6 +57,11 @@ jobs:
         run: uv pip check
       - name: Check style
         run: uv run --no-sync ruff check .
+      - name: Build both distributions and verify module ownership
+        if: matrix.backend == 'numpy'
+        run: |
+          uv build --all-packages --out-dir dist
+          uv run --no-sync python scripts/check_distribution_artifacts.py dist
       - name: Check numerical values and derivatives
         run: uv run --no-sync pytest -ra --junitxml=correctness.xml
       - name: Verify source and lock remain unchanged

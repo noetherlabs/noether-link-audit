@@ -5,6 +5,10 @@ scalar, paraxial coupling into an ideal centered Gaussian mode at the focal
 plane of an ideal lens. In this repository it computes the Monte Carlo
 coupling tables that the link-loss audit uses.
 
+The implementation is distributed separately as
+[`noether-physics`](../packages/noether_physics/README.md). It can be installed
+without Link Audit; the numerical source and optical conventions are shared.
+
 ## Optical definition
 
 For pupil amplitude $A$, optical path difference $d$, wavelength $\lambda$

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "noether-physics"
+version = "0.1.0"
+description = "Scalar Gaussian fiber overlap and optional optical-path derivatives"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "numpy>=2.1.3,<3",
+  "scipy>=1.14.1,<2",
+]
+classifiers = [
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+
+[project.optional-dependencies]
+differentiable = ["jax==0.10.2", "jaxlib==0.10.2"]
+
+[project.urls]
+Repository = "https://github.com/noetherlabs/noether-link-audit"
+Documentation = "https://github.com/noetherlabs/noether-link-audit/blob/main/docs/fiber-coupling.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/noether_physics"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src/noether_physics", "/README.md", "/LICENSE", "/pyproject.toml"]

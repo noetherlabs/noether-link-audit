@@ -2,6 +2,12 @@ version = 1
 revision = 5
 requires-python = "==3.12.*"
 
+[manifest]
+members = [
+    "noether-link-audit",
+    "noether-physics",
+]
+
 [[package]]
 name = "asdf"
 version = "6.0.0"
@@ -287,6 +293,7 @@ source = { editable = "." }
 dependencies = [
     { name = "hcipy" },
     { name = "matplotlib" },
+    { name = "noether-physics" },
     { name = "numpy" },
     { name = "pyarrow" },
     { name = "pyyaml" },
@@ -299,16 +306,15 @@ dev = [
     { name = "ruff" },
 ]
 differentiable = [
-    { name = "jax" },
-    { name = "jaxlib" },
+    { name = "noether-physics", extra = ["differentiable"] },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "hcipy", specifier = "==0.6.0" },
-    { name = "jax", marker = "extra == 'differentiable'", specifier = "==0.10.2" },
-    { name = "jaxlib", marker = "extra == 'differentiable'", specifier = "==0.10.2" },
     { name = "matplotlib", specifier = "==3.9.3" },
+    { name = "noether-physics", editable = "packages/noether_physics" },
+    { name = "noether-physics", extras = ["differentiable"], marker = "extra == 'differentiable'", editable = "packages/noether_physics" },
     { name = "numpy", specifier = "==2.1.3" },
     { name = "pyarrow", specifier = "==23.0.1" },
     { name = "pytest", marker = "extra == 'dev'", specifier = "==9.0.3" },
@@ -317,6 +323,30 @@ requires-dist = [
     { name = "scipy", specifier = "==1.14.1" },
 ]
 provides-extras = ["differentiable", "dev"]
+
+[[package]]
+name = "noether-physics"
+version = "0.1.0"
+source = { editable = "packages/noether_physics" }
+dependencies = [
+    { name = "numpy" },
+    { name = "scipy" },
+]
+
+[package.optional-dependencies]
+differentiable = [
+    { name = "jax" },
+    { name = "jaxlib" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "jax", marker = "extra == 'differentiable'", specifier = "==0.10.2" },
+    { name = "jaxlib", marker = "extra == 'differentiable'", specifier = "==0.10.2" },
+    { name = "numpy", specifier = ">=2.1.3,<3" },
+    { name = "scipy", specifier = ">=1.14.1,<2" },
+]
+provides-extras = ["differentiable"]
 
 [[package]]
 name = "numexpr"
